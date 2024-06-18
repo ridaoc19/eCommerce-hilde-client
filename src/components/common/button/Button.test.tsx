@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { SvgType } from '../icons/svgType';
@@ -36,9 +37,7 @@ describe('Button', () => {
 
 	test('renders with svgLeft', () => {
 		// Renderiza el componente Button con un SVG a la izquierda
-		const { container } = render(
-			<Button {...defaultProps} svgLeft={SvgType.ArrowBottom} />
-		);
+		const { container } = render(<Button {...defaultProps} svgLeft={SvgType.ArrowBottom} />);
 		const svgContainer = container.querySelector('.button__svg-left');
 		expect(svgContainer).toBeInTheDocument();
 		// expect(screen.getByRole('img')).toBeInTheDocument(); // Verifica que el SVG esté presente en el documento
@@ -61,7 +60,7 @@ describe('Button', () => {
 
 	test('disable button', () => {
 		// Renderiza el componente Button con el botón deshabilitado
-		render(<Button {...defaultProps} disabled={true} />);
+		render(<Button {...defaultProps} disabled />);
 		const button = screen.getByRole('button');
 		// expect(button).not.toBeDisabled();
 		// fireEvent.click(button);
@@ -70,9 +69,7 @@ describe('Button', () => {
 
 	test('exist other_attributes', () => {
 		// verifica que otros atributos estén presentes
-		render(
-			<Button {...defaultProps} other_attributes={{ name: 'test-name' }} />
-		);
+		render(<Button {...defaultProps} other_attributes={{ name: 'test-name' }} />);
 		const button = screen.getByRole('button');
 		expect(button).toHaveAttribute('name', 'test-name');
 	});

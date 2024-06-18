@@ -50,14 +50,12 @@ const meta: Meta<typeof Button> = {
 			options: Object.values(SvgType),
 		},
 		svgLeft: {
-			description:
-				'Tipo de icono SVG que se mostrará a la izquierda del texto.',
+			description: 'Tipo de icono SVG que se mostrará a la izquierda del texto.',
 			control: { type: 'select' },
 			options: Object.values(SvgType),
 		},
 		other_attributes: {
-			description:
-				'Otras propiedades HTML estándar que se pueden aplicar al botón.',
+			description: 'Otras propiedades HTML estándar que se pueden aplicar al botón.',
 			control: { type: 'object' },
 		},
 	},
