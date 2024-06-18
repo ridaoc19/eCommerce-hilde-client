@@ -13,7 +13,7 @@ const Svg: React.FC<SvgProps> = ({
 	type,
 	width = 24,
 	height = 24,
-	color = _color.font.font_accent,
+	color = _color['--font-accent'],
 }) => {
 	switch (type) {
 		case 'user':
