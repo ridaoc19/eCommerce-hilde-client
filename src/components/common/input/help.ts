@@ -1,0 +1,36 @@
+import _color from '../../../styles/main/global/_color';
+
+export const getBorderColor = (errorMessage: string, value: string | number) => {
+	if (errorMessage) {
+		return _color['--error-6'];
+	}
+	if (value.toString().length === 0) {
+		return _color['--font-accent'];
+	}
+	return _color['--success-6'];
+};
+
+export const getSvgColor = (errorMessage: string | undefined) => {
+	if (errorMessage) {
+		return _color['--error-6'];
+	}
+	return '#848FAC';
+};
+
+export const getInputType = (type: string | undefined, toggle: boolean) => {
+	if (type !== 'password') {
+		return type;
+	}
+	if (toggle) {
+		return 'text';
+	}
+
+	return type;
+};
+
+export const getClassNameModifier = (baseClass: string, modifier: string | undefined) => {
+	if (modifier) {
+		return `${baseClass}--${modifier}`;
+	}
+	return baseClass;
+};
