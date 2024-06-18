@@ -21,8 +21,9 @@
 		"noFallthroughCasesInSwitch": true,
 
 		/* config vitest*/
-		"types": ["vitest/globals"]
+		"types": ["vitest/globals", "@testing-library/jest-dom", "vite/client", "vitest"]
 	},
-	"include": ["src", "./vitest-setup.ts"],
-	"references": [{ "path": "./tsconfig.node.json" }]
+	"include": ["src", "vitest.setup.ts", "vite.config.ts"],
+	"references": [{ "path": "./tsconfig.node.json" }],
+	"exclude": ["node_modules"]
 }

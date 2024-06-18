@@ -12,7 +12,6 @@ El objetivo principal de este proyecto es aplicar y practicar mis conocimientos 
 >
 > Este es el repositorio del FrontEnd, puede visitar el del BackEnd en https://github.com/ridaoc19/eCommerce-hilde-server y el servidor de archivos en https://github.com/ridaoc19/eCommerce-hilde-files
 
-
 ## Stack
 
 ```json
@@ -74,7 +73,7 @@ npm run test-storybook
 
 ### Pruebas, Validación y herramientas
 
-- **ESlint**: Configurado con `eslint-config-airbnb-typescript`  para mantener el código limpio y sin errores.
+- **ESlint**: Configurado con `eslint-config-airbnb-typescript` para mantener el código limpio y sin errores.
 
 ```bash
 npm run lint
@@ -90,4 +89,3 @@ Este proyecto fue desarrollado por **Ricardo David Ocampo**.
 
 - **LinkedIn:** [https://www.linkedin.com/in/ridaoc19](https://www.linkedin.com/in/ridaoc19)
 - **GitHub:** [https://github.com/ridaoc19](https://github.com/ridaoc19)
-
