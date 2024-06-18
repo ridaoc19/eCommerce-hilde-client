@@ -2,73 +2,71 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, test, vi } from 'vitest';
 import { SvgType } from '../icons/svgType';
-import Button, { ButtonProps } from './Button';
-import { ButtonType } from './button.type';
+import Button from './Button';
+import { ButtonProps, ButtonType } from './button.type';
 
+// Propiedades por defecto para las pruebas
 const defaultProps: ButtonProps = {
 	id: 'test-button',
 	type: ButtonType.Dark,
 	text: 'Click Me',
-	handleClick: vi.fn(),
+	handleClick: vi.fn(), // Función simulada para handleClick
 	svgLeft: SvgType.ArrowBottom,
 	disabled: false,
 };
 
-// *TODO AGRUPAR
-describe('Button', () => {
+describe('Button Component Tests', () => {
 	beforeEach(() => {
 		cleanup(); // Limpia el estado antes de cada prueba
 	});
 
-	test('render component', () => {
-		// Renderiza el componente Button
+	// Prueba: Renderiza el componente Button
+	test('renders component', () => {
 		render(<Button {...defaultProps} />);
 		const button = screen.getByRole('button');
 		expect(button).toBeDefined();
 	});
 
+	// Prueba: handleClick se llama cuando se hace clic
 	test('calls handleClick when clicked', () => {
-		const handleClick = vi.fn(); // Crea una función simulada para handleClick
+		const handleClick = vi.fn(); // Función simulada para handleClick
 		render(<Button {...defaultProps} handleClick={handleClick} />);
 		const button = screen.getByRole('button');
 		fireEvent.click(button); // Simula un clic en el botón
 		expect(handleClick).toHaveBeenCalledTimes(1); // Verifica que handleClick se llame una vez
 	});
 
+	// Prueba: Renderiza con svgLeft presente
 	test('renders with svgLeft', () => {
-		// Renderiza el componente Button con un SVG a la izquierda
 		const { container } = render(<Button {...defaultProps} svgLeft={SvgType.ArrowBottom} />);
 		const svgContainer = container.querySelector('.button__svg-left');
 		expect(svgContainer).toBeInTheDocument();
-		// expect(screen.getByRole('img')).toBeInTheDocument(); // Verifica que el SVG esté presente en el documento
 	});
 
-	test('exist className "button"', () => {
-		// Verifica si tiene la clase button
-		render(<Button {...defaultProps} disabled={false} />);
+	// Prueba: Tiene la clase "button"
+	test('has className "button"', () => {
+		render(<Button {...defaultProps} />);
 		const button = screen.getByRole('button');
 		expect(button).toHaveClass('button');
 	});
 
-	test('button enabled', () => {
-		// Renderiza el componente Button con el botón habilitado
+	// Prueba: El botón está habilitado
+	test('button is enabled', () => {
 		render(<Button {...defaultProps} disabled={false} />);
 		const button = screen.getByRole('button');
 		expect(button).toHaveClass('button');
 		expect(button).not.toBeDisabled();
 	});
 
-	test('disable button', () => {
-		// Renderiza el componente Button con el botón deshabilitado
+	// Prueba: El botón está deshabilitado
+	test('button is disabled', () => {
 		render(<Button {...defaultProps} disabled />);
 		const button = screen.getByRole('button');
-		// expect(button).not.toBeDisabled();
-		// fireEvent.click(button);
 		expect(button).toBeDisabled();
 	});
 
-	test('exist other_attributes', () => {
-		// verifica que otros atributos estén presentes
+	// Prueba: Renderiza con otros atributos
+	test('renders with other attributes', () => {
 		render(<Button {...defaultProps} other_attributes={{ name: 'test-name' }} />);
 		const button = screen.getByRole('button');
 		expect(button).toHaveAttribute('name', 'test-name');

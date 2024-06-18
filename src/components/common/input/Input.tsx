@@ -1,4 +1,4 @@
-import { ChangeEventHandler, MouseEvent, useState } from 'react';
+import { InputHTMLAttributes, MouseEvent, useState } from 'react';
 import { HandleChangeText } from '../../../interfaces/global';
 import Svg from '../icons/Svg';
 import { SvgType } from '../icons/svgType';
@@ -17,7 +17,7 @@ export interface InputProps {
 	errorMessage: string;
 	svgLeft?: SvgType;
 	svgRight?: SvgType;
-	other_attributes?: ChangeEventHandler<HTMLButtonElement>;
+	other_attributes?: InputHTMLAttributes<HTMLInputElement>;
 }
 
 function Input({
