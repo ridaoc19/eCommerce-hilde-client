@@ -1,76 +1,97 @@
 @mixin status($type) {
-	@if $type==error {
-		> span {
-			border: 1px solid var(--error-6);
-			position: relative;
+  @if $type==error {
+    >span {
+      border  : 1px solid var(--error-6);
+      position: relative;
 
-			input::placeholder {
-				color: var(--error-4);
-			}
-		}
-	} @else if $type==brand {
-		> span {
-			border: 1px solid var(--brand-6);
+      input::placeholder {
+        color: var(--error-4);
+      }
+    }
+  }
 
-			input::placeholder {
-				color: none;
-			}
-		}
-	}
+  @else if $type==brand {
+    >span {
+      border: 1px solid var(--brand-6);
+
+      input::placeholder {
+        color: none;
+      }
+    }
+  }
 }
 
 .input {
-	.input_error {
-		@include status(error);
-	}
+  position  : relative;
+  margin-top: 0.5rem;
 
-	.input_brand {
-		@include status(brand);
-	}
+  &__label {
+    position  : absolute;
+    left      : 0.5rem;
+    top       : 0.5rem;
+    transition: top 0.3s ease, opacity 0.3s ease;
+    padding   : 0 0.3rem;
+    font-size : small;
+    color     : var(--base-font-light);
+    opacity         : 0;
 
-	> label {
-		color: var(--base-font);
-	}
+    &.active {
+      top             : -0.5rem;
+      opacity         : 1;
+      background-color: var(--base-light);
+      color           : var(--base-fond);
+    }
+  }
 
-	> div {
-		> span {
-			display: flex;
-			gap: 0.3rem;
-			border-radius: 0.7rem;
-			height: 1.8rem;
-			padding: 4px 11px;
-			background-color: #ffffff;
+  .input_error {
+    @include status(error);
+  }
 
-			> span {
-				display: flex;
-				align-items: center;
-			}
+  .input_brand {
+    @include status(brand);
+  }
 
-			> input {
-				padding: 0;
-				border: none;
-				border-radius: 0;
-				outline: none;
-				margin: 0;
-				width: 100%;
 
-				&:-webkit-autofill {
-					-webkit-box-shadow: 0 0 0 30px white inset !important;
-				}
-			}
-		}
-	}
+  >div {
+    >span {
+      display            : flex;
+      gap                : 0.3rem;
+      border-radius      : var(--border-radius);
+      padding            : 0.5rem;
+      // height          : 1.8rem;
+      // padding         : 4px 11px;
+      // background-color: #ffffff;
 
-	> div:nth-child(3) {
-		> div {
-			> div {
-				> span {
-					display: block;
-					color: var(--error-6);
-					text-align: center;
-					font-size: small;
-				}
-			}
-		}
-	}
+      >span {
+        display    : flex;
+        align-items: center;
+      }
+
+      >input {
+        padding      : 0;
+        border       : none;
+        border-radius: 0;
+        outline      : none;
+        margin       : 0;
+        width        : 100%;
+
+        &:-webkit-autofill {
+          -webkit-box-shadow: 0 0 0 30px white inset !important;
+        }
+      }
+    }
+  }
+
+  >div:nth-child(3) {
+    >div {
+      >div {
+        >span {
+          display   : block;
+          color     : var(--error-6);
+          text-align: center;
+          font-size : small;
+        }
+      }
+    }
+  }
 }

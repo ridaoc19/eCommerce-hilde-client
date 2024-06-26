@@ -6,7 +6,7 @@ import { getBorderColor, getClassNameModifier, getInputType, getSvgColor } from 
 
 export interface InputProps {
 	type?: string;
-	id: string;
+	id: `input__${string}`;
 	placeholder: string;
 	value: string | number;
 	handleOnChange: HandleChangeText;
@@ -50,7 +50,9 @@ function Input({
 
 	return (
 		<div className={`input input__container${className && `--${className}`}`}>
-			<label htmlFor={`input__${id}`}>{placeholder}</label>
+			<label htmlFor={`input__${id}`} className={`input__label ${value ? 'active' : ''}`}>
+				{placeholder}
+			</label>
 
 			<div className={`${errorMessage ? 'input_error' : 'input_brand'} input__content${className && `--${className}`}`}>
 				<span
@@ -71,7 +73,7 @@ function Input({
 						id={`input__${id}`}
 						data-testid='input'
 						type={getInputType(type, toggle)}
-						placeholder={placeholder}
+						placeholder={!value ? placeholder : ''}
 						value={value}
 						onChange={event => handleOnChange(event)}
 						name={name}
