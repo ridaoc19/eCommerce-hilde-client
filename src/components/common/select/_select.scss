@@ -1,0 +1,115 @@
+.select {
+  width     : 100%;
+  position  : relative;
+  margin-top: 0.5rem;
+
+  &__label {
+    position  : absolute;
+    left      : 0.3rem;
+    top       : 0.5rem;
+    transition: top 0.3s ease, opacity 0.3s ease;
+    padding   : 0 0.3rem;
+    font-size : small;
+    color     : var(--base-font-light);
+
+    &.active {
+      top             : -0.5rem;
+      opacity         : 1;
+      background-color: var(--base-light);
+      color           : var(--base-fond);
+    }
+  }
+
+  &__input {
+    width  : 100%;
+    display: flex;
+
+    >input {
+      width       : 100%;
+      padding     : 0.5rem;
+      border      : var(--border);
+      border-right: none;
+
+      border-top-left-radius   : var(--border-radius);
+      border-bottom-left-radius: var(--border-radius);
+      box-sizing               : border-box;
+
+      &:focus {
+        outline                  : none;
+        border-color             : var(--base-main);
+        border-bottom-left-radius: 0;
+      }
+    }
+
+    &--button-right {
+      background-color          : var(--base-light);
+      border                    : var(--border);
+      border-top-right-radius   : var(--border-radius);
+      border-bottom-right-radius: var(--border-radius);
+      border-left               : none;
+      cursor                    : pointer;
+
+      &.open {
+        border-color              : var(--base-main);
+        border-left               : none;
+        border-bottom-right-radius: 0;
+      }
+    }
+
+    &--button-left {
+      background-color         : var(--base-light);
+      border                   : var(--border);
+      border-top-left-radius   : var(--border-radius);
+      border-bottom-left-radius: var(--border-radius);
+      border-right             : none;
+      cursor                   : pointer;
+
+      &.open {
+        border-color             : var(--base-main);
+        border-bottom-left-radius: 0;
+      }
+    }
+  }
+
+  &__list {
+    position: relative;
+
+    &--dropdown {
+      position                  : absolute;
+      top                       : 0;
+      left                      : 0;
+      right                     : 0;
+      max-height                : 400px;
+      overflow-y                : auto;
+      background                : var(--base-light);
+      border                    : 1px solid var(--base-main);
+      border-top                : none;
+      z-index                   : 10;
+      box-shadow                : 0 2px 8px rgba(0, 0, 0, 0.15);
+      margin-top                : 0;
+      list-style                : none;
+      padding                   : 0;
+      display                   : flex;
+      flex-direction            : column;
+      border-bottom-right-radius: var(--border-radius);
+      border-bottom-left-radius : var(--border-radius);
+
+      &-item {
+        all            : unset;
+        padding        : 0.5rem;
+        cursor         : pointer;
+        display        : flex;
+        justify-content: space-between;
+        font-size      : small;
+
+        &.selected {
+          background-color: var(--error-1);
+        }
+
+        &:hover {
+          background-color: var(--error-1);
+        }
+      }
+    }
+  }
+}

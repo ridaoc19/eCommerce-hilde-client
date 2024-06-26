@@ -10,7 +10,7 @@ body {
 	font-size: $base-font-size;
 
 	font-size: 14px;
-	color: #333;
+	color: var(--base-font);
 }
 
 @media only screen and (min-width: 600px) {
@@ -49,7 +49,7 @@ code {
 }
 
 a {
-	color: var(--font-brand);
+	color: var(--base-font);
 	text-decoration: none;
 }
 
