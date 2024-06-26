@@ -70,17 +70,24 @@ export const Inputs: Story = {
 		id: 'input__login-username',
 		name: 'username',
 		placeholder: 'Usuario',
-		value: '',
+		value: 'max',
 		errorMessage: '',
 		handleOnChange: fn(),
 	},
 	play: async ({ canvasElement, args }) => {
 		const canvas = within(canvasElement);
-		const inputElement = canvas.getByPlaceholderText('Usuario');
+		const inputElement = canvas.getByTestId('input');
 
 		expect(inputElement).toBeInTheDocument();
-		fireEvent.change(inputElement, { target: { value: 'new user' } });
-		expect(args.handleOnChange).toHaveBeenCalledTimes(1);
-		expect(inputElement).toHaveValue('new user');
+
+		// await userEvent.type(inputElement, 'r');
+		await fireEvent.change(inputElement, { target: { value: 'a' } });
+		await expect(inputElement).toHaveValue('max');
+
+		await new Promise(r => {
+			setTimeout(r, 100);
+		});
+		await fireEvent.change(inputElement, { target: { value: 'a' } });
+		await expect(args.handleOnChange).toHaveBeenCalledTimes(2);
 	},
 };

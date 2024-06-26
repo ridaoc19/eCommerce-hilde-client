@@ -69,6 +69,7 @@ function Input({
 					</span>
 					<input
 						id={`input__${id}`}
+						data-testid='input'
 						type={getInputType(type, toggle)}
 						placeholder={placeholder}
 						value={value}
