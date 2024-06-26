@@ -38,6 +38,15 @@ module.exports = {
 				],
 			},
 		],
+		'jsx-a11y/label-has-associated-control': [
+			2,
+			{
+				labelComponents: ['Select'],
+				labelAttributes: ['label'],
+				controlComponents: ['*'],
+				depth: 3,
+			},
+		],
 		'react/require-default-props': 'off',
 	},
 };
