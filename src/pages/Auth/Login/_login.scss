@@ -1,0 +1,25 @@
+@import './LoginInput/loginInput';
+@import './LoginButtons/loginButtons';
+
+.login-container {
+	min-height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 1rem;
+	box-sizing: border-box;
+
+	.login {
+		display: flex;
+		flex-direction: column;
+		// background-color: rgb(240, 224, 224);
+		max-width: 20rem;
+		width: 100%;
+		height: 100%;
+		gap: 0.5rem;
+
+		&__logo {
+			text-align: center;
+		}
+	}
+}
