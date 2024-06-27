@@ -9,7 +9,6 @@ function Button({
 	text,
 	value = '',
 	disabled = false,
-	className = '',
 	other_attributes = {},
 	svgLeft = null,
 	svgRight = null,
@@ -18,7 +17,7 @@ function Button({
 		<button
 			type='button'
 			id={id}
-			className={`button button_${type} ${className}`}
+			className={`button button_${type}`}
 			onClick={handleClick}
 			value={value}
 			disabled={disabled}

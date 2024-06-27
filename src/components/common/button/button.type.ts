@@ -25,5 +25,4 @@ export interface ButtonProps {
 	other_attributes?: ButtonHTMLAttributes<HTMLButtonElement>;
 	disabled?: boolean;
 	value?: string | number;
-	className?: string;
 }

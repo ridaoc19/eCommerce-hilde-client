@@ -9,7 +9,7 @@ interface LoginInputProps {
 
 export default function LoginInput({ stateLogin, setStateLogin }: LoginInputProps) {
 	return (
-		<div className='login-form-input'>
+		<div className='login-input'>
 			{(Object.keys(stateLogin) as (keyof InitialStateLogin)[]).map(item => (
 				<Input
 					id={`input__login--${item}`}

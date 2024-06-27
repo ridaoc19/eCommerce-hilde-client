@@ -29,7 +29,7 @@ const buttons: readonly ButtonConfig[] = [
 	},
 ] as const;
 
-export default function LoginButtons() {
+export default function RegistreButtons() {
 	return (
 		<div className='login-buttons'>
 			{buttons.map(({ id, text, type }) => (

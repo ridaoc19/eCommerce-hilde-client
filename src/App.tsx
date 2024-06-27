@@ -1,10 +1,10 @@
-import Login from './pages/Auth/Login/Login';
+import Reset from './pages/Auth/Reset/Reset';
 import './styles/app/app.scss';
 
 function App() {
 	return (
 		<div className='app'>
-			<Login />
+			<Reset />
 		</div>
 	);
 }
