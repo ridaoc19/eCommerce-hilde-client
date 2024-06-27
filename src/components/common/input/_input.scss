@@ -20,6 +20,29 @@
 }
 
 .input {
+	position: relative;
+	margin-top: 0.5rem;
+
+	&__label {
+		position: absolute;
+		left: 0.5rem;
+		top: 0.5rem;
+		transition:
+			top 0.3s ease,
+			opacity 0.3s ease;
+		padding: 0 0.3rem;
+		font-size: small;
+		color: var(--base-font-light);
+		opacity: 0;
+
+		&.active {
+			top: -0.5rem;
+			opacity: 1;
+			background-color: var(--base-light);
+			color: var(--base-fond);
+		}
+	}
+
 	.input_error {
 		@include status(error);
 	}
@@ -28,18 +51,15 @@
 		@include status(brand);
 	}
 
-	> label {
-		color: var(--base-font);
-	}
-
 	> div {
 		> span {
 			display: flex;
 			gap: 0.3rem;
-			border-radius: 0.7rem;
-			height: 1.8rem;
-			padding: 4px 11px;
-			background-color: #ffffff;
+			border-radius: var(--border-radius);
+			padding: 0.5rem;
+			// height          : 1.8rem;
+			// padding         : 4px 11px;
+			// background-color: #ffffff;
 
 			> span {
 				display: flex;

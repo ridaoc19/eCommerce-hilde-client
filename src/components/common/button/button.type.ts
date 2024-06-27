@@ -15,7 +15,7 @@ export const enum ButtonType {
 }
 
 export interface ButtonProps {
-	id: string;
+	id: `button__${string}`;
 	type: ButtonType;
 	text: string | ReactNode;
 	handleClick: HandleClick;
@@ -25,5 +25,4 @@ export interface ButtonProps {
 	other_attributes?: ButtonHTMLAttributes<HTMLButtonElement>;
 	disabled?: boolean;
 	value?: string | number;
-	className?: string;
 }

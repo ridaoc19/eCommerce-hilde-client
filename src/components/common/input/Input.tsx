@@ -6,23 +6,19 @@ import { getBorderColor, getClassNameModifier, getInputType, getSvgColor } from 
 
 export interface InputProps {
 	type?: string;
-	id: string;
-	placeholder: string;
-	value: string | number;
-	handleOnChange: HandleChangeText;
 	name: string;
+	value: string | number;
+	placeholder: string;
+	errorMessage: string;
+	handleOnChange: HandleChangeText;
 
 	disabled?: boolean;
-	className?: string;
-	errorMessage: string;
 	svgLeft?: SvgType;
 	svgRight?: SvgType;
 	other_attributes?: InputHTMLAttributes<HTMLInputElement>;
 }
 
 function Input({
-	id,
-	className,
 	svgLeft,
 	svgRight,
 	errorMessage = '',
@@ -49,16 +45,18 @@ function Input({
 	};
 
 	return (
-		<div className={`input input__container${className && `--${className}`}`}>
-			<label htmlFor={`input__${id}`}>{placeholder}</label>
+		<div className={`input input__container${name && `--${name}`}`}>
+			<label htmlFor={`input__${name}`} className={`input__label ${value ? 'active' : ''}`}>
+				{placeholder}
+			</label>
 
-			<div className={`${errorMessage ? 'input_error' : 'input_brand'} input__content${className && `--${className}`}`}>
+			<div className={`${errorMessage ? 'input_error' : 'input_brand'} input__content${name && `--${name}`}`}>
 				<span
 					style={{
 						border: `1px solid ${getBorderColor(errorMessage, value)}`,
 					}}
 				>
-					<span className={`input__svg-left${className && `--${className}`}`}>
+					<span className={`input__svg-left${name && `--${name}`}`}>
 						{svgLeft &&
 							Svg({
 								type: svgLeft,
@@ -68,10 +66,10 @@ function Input({
 							})}
 					</span>
 					<input
-						id={`input__${id}`}
+						id={`input__${name}`}
 						data-testid='input'
 						type={getInputType(type, toggle)}
-						placeholder={placeholder}
+						placeholder={!value ? placeholder : ''}
 						value={value}
 						onChange={event => handleOnChange(event)}
 						name={name}
@@ -80,7 +78,7 @@ function Input({
 						{...other_attributes}
 					/>
 					<span
-						className={getClassNameModifier('input__svgTwo', className)}
+						className={getClassNameModifier('input__svgTwo', name)}
 						onClick={handleOnClick}
 						onKeyDown={handleKeyDown}
 						role='button'
@@ -97,9 +95,9 @@ function Input({
 				</span>
 			</div>
 
-			<div className={`input__error${className && `--${className}`}`}>
+			<div className={`input__error${name && `--${name}`}`}>
 				<div>
-					<div className={`input__message${className && `--${className}`}`}>
+					<div className={`input__message${name && `--${name}`}`}>
 						<span>{errorMessage}</span>
 					</div>
 				</div>
