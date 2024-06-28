@@ -431,7 +431,7 @@ function Svg({ type, width = 24, height = 24, color = _color['--font-accent'] }:
 				</svg>
 			);
 
-		case 'padlock':
+		case SvgType.Password:
 			return (
 				<svg
 					role={type}

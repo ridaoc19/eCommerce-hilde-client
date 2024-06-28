@@ -2,7 +2,7 @@ import { InputHTMLAttributes, MouseEvent, useState } from 'react';
 import { HandleChangeText } from '../../../interfaces/global';
 import Svg from '../icons/Svg';
 import { SvgType } from '../icons/svgType';
-import { getBorderColor, getClassNameModifier, getInputType, getSvgColor } from './help';
+import { getBorderColor, getClassNameModifier, getInputType, getSvgColor, svgTypePassword } from './help';
 
 export interface InputProps {
 	type?: string;
@@ -84,13 +84,14 @@ function Input({
 						role='button'
 						tabIndex={0}
 					>
-						{svgRight &&
-							Svg({
-								type: svgRight,
-								height: 16,
-								width: 16,
-								color: getSvgColor(errorMessage),
-							})}
+						{svgRight ||
+							(svgLeft === SvgType.Password &&
+								Svg({
+									type: svgTypePassword(svgLeft, toggle),
+									height: 16,
+									width: 16,
+									color: getSvgColor(errorMessage),
+								}))}
 					</span>
 				</span>
 			</div>

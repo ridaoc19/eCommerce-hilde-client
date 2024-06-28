@@ -1,22 +1,20 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, MouseEvent, SetStateAction } from 'react';
 import Button from '../../../../../components/common/button/Button';
 import { ButtonProps } from '../../../../../components/common/button/button.type';
 import Svg from '../../../../../components/common/icons/Svg';
 import { SvgType } from '../../../../../components/common/icons/svgType';
-import Input, { InputProps } from '../../../../../components/common/input/Input';
+import Input from '../../../../../components/common/input/Input';
 import type { InitialState } from '../useAuth';
 
-export type InputTemplateProps = Pick<InputProps, 'name' | 'placeholder'>;
-export type ButtonTemplateProps = Pick<ButtonProps, 'id' | 'text' | 'type'>;
-
-interface AuthComponentProps {
+export interface AuthComponentProps {
 	component: string;
 	state: InitialState[];
 	setState: Dispatch<SetStateAction<InitialState[]>>;
-	buttons: ButtonTemplateProps[];
+	buttons: Pick<ButtonProps, 'id' | 'text' | 'type'>[];
+	handleClick: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
-export default function AuthComponent({ state, setState, buttons, component }: AuthComponentProps) {
+export default function AuthComponent({ state, setState, buttons, component, handleClick }: AuthComponentProps) {
 	return (
 		<div className='auth-component-container'>
 			<div className='auth-component'>
@@ -27,6 +25,9 @@ export default function AuthComponent({ state, setState, buttons, component }: A
 					<section className='auth-component__form--inputs'>
 						{state.map(stateItem => {
 							const { name, placeholder, error, disabled } = stateItem;
+							const svgType = SvgType[(name.charAt(0).toUpperCase() + name.slice(1)) as keyof typeof SvgType];
+							console.log(svgType, name);
+
 							return (
 								<Input
 									key={name}
@@ -38,6 +39,7 @@ export default function AuthComponent({ state, setState, buttons, component }: A
 											prevState.map(item => (item.name === name ? { ...item, [name]: target.value } : item))
 										)
 									}
+									svgLeft={svgType}
 									disabled={disabled}
 									value={stateItem[name] as string}
 									placeholder={placeholder}
@@ -54,7 +56,7 @@ export default function AuthComponent({ state, setState, buttons, component }: A
 								text={text}
 								disabled={false}
 								value={id}
-								handleClick={() => {}}
+								handleClick={handleClick}
 							/>
 						))}
 					</section>
