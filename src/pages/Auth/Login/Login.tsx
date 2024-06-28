@@ -1,12 +1,14 @@
-// Login.tsx
-
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ButtonType } from '../../../components/common/button/button.type';
+import useAppDispatch from '../../../hooks/useAppDispatch';
+import { postLogin } from '../authSlice';
 import useAuth, { UseAuthProps } from '../hooks/useAuth/useAuth';
 
-export type InitialStateLogin = { username: string; password: string };
+type ButtonIds = 'reset' | 'login' | 'registre' | 'back';
+type InputName = 'email' | 'password';
 
-const props: UseAuthProps = {
+const props: UseAuthProps<ButtonIds, InputName> = {
 	component: 'login',
 	inputs: [
 		{ name: 'email', placeholder: 'Correo electrónico' },
@@ -37,23 +39,30 @@ const props: UseAuthProps = {
 };
 
 export default function Login() {
-	const { Component, eventClick } = useAuth(props);
+	const { Component, eventClick, body } = useAuth<ButtonIds, InputName>(props);
+	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
+
+	const handleClick = () => {
+		switch (eventClick.value) {
+			case 'back':
+				return navigate('/');
+			case 'registre':
+				return navigate('/registre');
+			case 'reset':
+				return navigate('/reset');
+			case 'login':
+				return dispatch(postLogin(body));
+			default:
+				break;
+		}
+	};
 
 	useEffect(() => {
-		console.log(eventClick);
+		if (eventClick.value) {
+			handleClick();
+		}
 	}, [eventClick]);
 
-	// const [stateLogin, setStateLogin] = useState<InitialStateLogin>(initialStateLogin);
-
 	return <div>{Component}</div>;
-	// <AuthLayout>
-	// 	<form className='login'>
-	// 		<section className='login--input'>
-	// 			<LoginInput stateLogin={stateLogin} setStateLogin={setStateLogin} />
-	// 		</section>
-	// 		<section className='login--buttons'>
-	// 			<LoginButtons />
-	// 		</section>
-	// 	</form>
-	// </AuthLayout>
 }

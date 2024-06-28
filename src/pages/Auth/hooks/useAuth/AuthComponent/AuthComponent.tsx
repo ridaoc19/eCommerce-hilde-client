@@ -26,8 +26,6 @@ export default function AuthComponent({ state, setState, buttons, component, han
 						{state.map(stateItem => {
 							const { name, placeholder, error, disabled } = stateItem;
 							const svgType = SvgType[(name.charAt(0).toUpperCase() + name.slice(1)) as keyof typeof SvgType];
-							console.log(svgType, name);
-
 							return (
 								<Input
 									key={name}
@@ -43,6 +41,7 @@ export default function AuthComponent({ state, setState, buttons, component, han
 									disabled={disabled}
 									value={stateItem[name] as string}
 									placeholder={placeholder}
+									other_attributes={{ autoComplete: name === 'password' ? 'current-password' : name }}
 								/>
 							);
 						})}

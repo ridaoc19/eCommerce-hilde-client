@@ -3,36 +3,53 @@ import { ButtonProps } from '../../../../components/common/button/button.type';
 import { InputProps } from '../../../../components/common/input/Input';
 import AuthComponent from './AuthComponent/AuthComponent';
 
-export interface UseAuthProps {
+export interface UseAuthProps<T, K> {
 	component: string;
-	inputs: Pick<InputProps, 'name' | 'placeholder'>[];
-	buttons: (Pick<ButtonProps, 'id' | 'text' | 'type'> & { returnClick?: boolean })[];
+	inputs: { name: K; placeholder: InputProps['placeholder'] }[];
+	buttons: {
+		id: T;
+		text: ButtonProps['text'];
+		type: ButtonProps['type'];
+	}[];
 }
 
-export type InitialState = {
-	[key: string]: string | boolean;
+export type InitialState<K extends string> = {
+	[key in K]: string;
+} & {
 	error: string;
 	name: string;
 	placeholder: string;
 	disabled: boolean;
 };
 
-interface UseAuthReturn {
+export interface UseAuthReturn<T, K extends string> {
 	Component: ReactNode;
-	eventClick: { value: string; state: InitialState[] };
+	eventClick: { value: T; state: InitialState<K>[] };
+	body: { [key in K]: string };
 }
 
-export default function useAuth({ inputs, buttons, component }: UseAuthProps): UseAuthReturn {
-	const [state, setState] = useState<InitialState[]>(
+export default function useAuth<T extends string, K extends string>({
+	inputs,
+	buttons,
+	component,
+}: UseAuthProps<T, K>): UseAuthReturn<T, K> {
+	const [state, setState] = useState<InitialState<K>[]>(
 		inputs.map(({ name, placeholder }) => {
-			return { [name]: '', error: '', name, placeholder, disabled: false };
+			return {
+				[name]: '',
+				error: '',
+				name,
+				placeholder,
+				disabled: false,
+			} as InitialState<K>;
 		})
 	);
-	const [eventClick, setEventClick] = useState<UseAuthReturn['eventClick']>({ state: [], value: '' });
+
+	const [eventClick, setEventClick] = useState<UseAuthReturn<T, K>['eventClick']>({ state: [], value: '' as T });
 
 	const handleOnClick = (event: MouseEvent<HTMLButtonElement>) => {
 		const { value } = event.target as HTMLButtonElement;
-		setEventClick({ state, value });
+		setEventClick({ state, value: value as T });
 		// dispatch(fetchApi());
 	};
 
@@ -41,11 +58,18 @@ export default function useAuth({ inputs, buttons, component }: UseAuthProps): U
 			<AuthComponent
 				component={component}
 				state={state}
-				buttons={buttons.map(({ returnClick, ...button }) => button)}
+				buttons={buttons}
 				setState={setState}
 				handleClick={handleOnClick}
 			/>
 		),
 		eventClick,
+		body: state.reduce(
+			(acc, item) => {
+				const key = item.name as K;
+				return { ...acc, [key]: item[key] };
+			},
+			{} as Record<K, string>
+		),
 	};
 }

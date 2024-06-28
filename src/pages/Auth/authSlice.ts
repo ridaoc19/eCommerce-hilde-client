@@ -23,17 +23,22 @@ export const authSlice = createAppSlice({
 			async ({ email, password }: FetchLogin, thunkAPI) => {
 				const state = thunkAPI.getState() as { auth: InitialStateAuth };
 				console.log('Current state:', state.auth);
-				return fetchLogin({ email, password });
+				const response = await fetchLogin({ email, password });
+				console.log(response);
+				return response;
 			},
 			{
 				pending: state => {
 					state.status = 'pending';
 				},
 				fulfilled: (state, { payload }) => {
+					console.log({ payload });
 					state.user = payload;
 					state.status = 'success';
 				},
-				rejected: state => {
+				rejected: (state, { payload, error }) => {
+					console.log({ payload, error });
+
 					state.status = 'error';
 					state.error = [''];
 				},
