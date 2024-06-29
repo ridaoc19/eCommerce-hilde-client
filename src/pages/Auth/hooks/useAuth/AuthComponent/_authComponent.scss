@@ -24,11 +24,16 @@
       flex-direction: column;
       gap           : 0.5rem;
 
-      &--inputs,
+      &--inputs {
+        display       : flex;
+        flex-direction: column;
+        gap           : 0.1rem
+      }
+
       &--buttons {
         display       : flex;
         flex-direction: column;
-        gap           : 0.5rem;
+        gap           : 1rem;
       }
     }
   }

@@ -14,11 +14,13 @@ export interface Message {
 }
 
 interface InitialStateGlobal {
-	messages: Message[];
+	generalMessages: Message[];
+	localMessages: Message[];
 }
 
 const initialStateAuth: InitialStateGlobal = {
-	messages: [],
+	generalMessages: [],
+	localMessages: [],
 };
 
 const parseErrorMessage = (errorString: string): Pick<Message, 'field' | 'message'> => {
@@ -44,23 +46,32 @@ export const globalSlice = createAppSlice({
 						statusCode: payload.statusCode,
 					};
 				});
-				state.messages = [...state.messages, ...newMessages];
+				state.localMessages = [...state.localMessages, ...newMessages.filter(({ field }) => field !== 'general')];
+				state.generalMessages = [...state.generalMessages, ...newMessages.filter(({ field }) => field === 'general')];
 			} else {
-				state.messages = [
-					...state.messages,
-					{
-						...payload,
-						...parseErrorMessage(payload.message),
-						errorId: generateUniqueId(),
-					},
-				];
+				const isExistLocal = state.localMessages.some(
+					({ field }) => parseErrorMessage(payload.message as string).field === field
+				);
+				if (isExistLocal) return;
+				const data = {
+					...payload,
+					...parseErrorMessage(payload.message),
+					errorId: generateUniqueId(),
+				};
+				if (data.field !== 'general') {
+					state.localMessages = [...state.localMessages, data];
+				} else {
+					state.generalMessages = [...state.generalMessages, data];
+				}
 			}
 		}),
 		deleteMessage: create.reducer((state, { payload }: PayloadAction<Message['errorId'][]>) => {
-			state.messages = state.messages.filter(({ errorId }) => !payload.includes(errorId));
+			state.generalMessages = state.generalMessages.filter(({ errorId }) => !payload.includes(errorId));
+			state.localMessages = state.localMessages.filter(({ errorId }) => !payload.includes(errorId));
 		}),
 		cleanMessage: create.reducer(state => {
-			state.messages = [];
+			state.generalMessages = [];
+			state.localMessages = [];
 		}),
 	}),
 });

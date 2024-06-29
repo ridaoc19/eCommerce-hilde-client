@@ -4,17 +4,25 @@ import { ButtonProps } from '../../../../../components/common/button/button.type
 import Svg from '../../../../../components/common/icons/Svg';
 import { SvgType } from '../../../../../components/common/icons/svgType';
 import Input from '../../../../../components/common/input/Input';
+import useValidations from '../../../../../hooks/useValidations/useValidations';
 import type { InitialState } from '../useAuth';
 
-export interface AuthComponentProps {
+export interface AuthComponentProps<K extends string> {
 	component: string;
-	state: InitialState[];
-	setState: Dispatch<SetStateAction<InitialState[]>>;
+	state: InitialState<K>[];
+	setState: Dispatch<SetStateAction<InitialState<K>[]>>;
 	buttons: Pick<ButtonProps, 'id' | 'text' | 'type'>[];
 	handleClick: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
-export default function AuthComponent({ state, setState, buttons, component, handleClick }: AuthComponentProps) {
+export default function AuthComponent<K extends string>({
+	state,
+	setState,
+	buttons,
+	component,
+	handleClick,
+}: AuthComponentProps<K>) {
+	const { getValidationErrors } = useValidations();
 	return (
 		<div className='auth-component-container'>
 			<div className='auth-component'>
@@ -32,14 +40,17 @@ export default function AuthComponent({ state, setState, buttons, component, han
 									type={name}
 									name={name}
 									errorMessage={error}
-									handleOnChange={({ target }) =>
+									handleOnChange={({ target: { value } }) => {
+										const { stop, message } = getValidationErrors({ name, value });
 										setState(prevState =>
-											prevState.map(item => (item.name === name ? { ...item, [name]: target.value } : item))
-										)
-									}
+											prevState.map(item =>
+												item.name === name ? { ...item, [name]: stop ? item[name as K] : value, error: message } : item
+											)
+										);
+									}}
 									svgLeft={svgType}
 									disabled={disabled}
-									value={stateItem[name] as string}
+									value={stateItem[name as K] as string}
 									placeholder={placeholder}
 									other_attributes={{ autoComplete: name === 'password' ? 'current-password' : name }}
 								/>

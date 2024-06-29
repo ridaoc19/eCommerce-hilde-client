@@ -7,26 +7,26 @@ import Svg from '../common/icons/Svg';
 import { SvgType } from '../common/icons/svgType';
 
 const MessageList: React.FC = () => {
-	const { messages } = useAppSelector(globalState);
+	const { generalMessages } = useAppSelector(globalState);
 	const dispatch = useAppDispatch();
 	const { mediaQuery } = useMediaQuery();
 
 	useEffect(() => {
 		const timer = setTimeout(() => {
-			if (messages.length > 0) {
-				closeMessage(messages[0].errorId);
+			if (generalMessages.length > 0) {
+				closeMessage(generalMessages[0].errorId);
 			}
 		}, 5000);
 		return () => clearTimeout(timer);
-	}, [messages]);
+	}, [generalMessages]);
 
 	const closeMessage = (errorId: Message['errorId']) => {
 		dispatch(deleteMessage([errorId]));
 	};
 
 	return (
-		<div className={`message-list ${mediaQuery} ${messages.length > 0 ? 'isOpen' : 'isHidden'}`}>
-			{messages.map(({ message, statusCode, errorId }, index) => (
+		<div className={`message-list ${mediaQuery} ${generalMessages.length > 0 ? 'isOpen' : 'isHidden'}`}>
+			{generalMessages.map(({ message, statusCode, errorId }, index) => (
 				<div key={index} className={`message-list__card ${getStatusColor(statusCode)}`}>
 					<button className='message-list__card--button' onClick={() => closeMessage(errorId)}>
 						<Svg type={SvgType.Close} width={16} height={16} />
