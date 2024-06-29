@@ -1,0 +1,61 @@
+.message-list {
+  position  : fixed;
+  top       : 20px;
+  right     : -300px;
+  width     : 300px;
+  transition: right 0.3s ease;
+  z-index   : 1000;
+
+  &.isOpen {
+    right: 10px;
+  }
+
+  &.isHidden {
+    right: -300px;
+  }
+
+  &__card {
+    background-color: #ffffff;
+    border          : 1px solid #dddddd;
+    box-shadow      : 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding         : 10px;
+    margin-bottom   : 10px;
+    transition      : opacity 0.3s ease, transform 0.3s ease;
+
+    &.information {
+      border-left: 5px solid #3498db;
+    }
+
+    &.success {
+      border-left: 5px solid #2ecc71;
+    }
+
+    &.warning {
+      border-left: 5px solid #f39c12;
+    }
+
+    &.error {
+      border-left: 5px solid #e74c3c;
+    }
+
+    &:hover {
+      transform: scale(1.02);
+    }
+
+    &--button {
+      background-color: transparent;
+      border          : none;
+      color           : #333333;
+      cursor          : pointer;
+      font-size       : 14px;
+      padding         : 5px;
+      position        : absolute;
+      right           : 5px;
+      top             : 5px;
+    }
+
+    &--button:hover {
+      color: #e74c3c;
+    }
+  }
+}

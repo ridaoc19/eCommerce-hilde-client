@@ -3,8 +3,9 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import { ErrorApi } from '../interfaces/global';
 import generateUniqueId from '../utils/uuid';
 import createAppSlice from './createAppSlice';
+import { RootState } from './store';
 
-declare interface Message {
+export interface Message {
 	message: string;
 	error: string;
 	statusCode: number;
@@ -64,4 +65,5 @@ export const globalSlice = createAppSlice({
 	}),
 });
 
-export const { postMessage } = globalSlice.actions;
+export const { postMessage, cleanMessage, deleteMessage } = globalSlice.actions;
+export const globalState = (state: RootState) => state.global;

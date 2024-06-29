@@ -20,7 +20,7 @@ export const authSlice = createAppSlice({
 	initialState: initialStateAuth,
 	reducers: create => ({
 		postLogin: create.asyncThunk(
-			async ({ email, password }: FetchLogin, thunkAPI) => {
+			async ({ email, password }: Omit<FetchLogin, 'dispatch'>, thunkAPI) => {
 				const response = await fetchLogin({ email, password, dispatch: thunkAPI.dispatch as AppDispatch });
 				return response;
 			},
