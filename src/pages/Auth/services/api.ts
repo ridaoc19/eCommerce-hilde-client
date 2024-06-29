@@ -1,15 +1,18 @@
+import { ErrorApi } from '../../../interfaces/global';
+import { AppDispatch } from '../../../redux/store';
+import catchError from '../../../services/catchError';
+
+
 export interface FetchLogin extends Pick<User, 'email'> {
 	password: string;
+	dispatch: AppDispatch;
 }
 
 export const fetchLogin = async (data: FetchLogin): Promise<User> => {
 	try {
-		// Validación de datos de entrada
 		if (!data.email || !data.password) {
-			throw new Error('Email and password are required');
+			throw new Error('Correo electrónico y contraseña requeridos');
 		}
-
-		console.log(import.meta.env.VITE_SERVER, data, 'Sending login request');
 
 		const response = await fetch(`${import.meta.env.VITE_SERVER}/auth/login`, {
 			method: 'POST',
@@ -20,15 +23,14 @@ export const fetchLogin = async (data: FetchLogin): Promise<User> => {
 		});
 
 		if (!response.ok) {
-			const errorResponse = await response.json();
-			throw new Error(errorResponse.message || 'Failed to login');
+			const errorResponse: ErrorApi = await response.json();
+			throw errorResponse;
 		}
-
 		const user: User = await response.json();
-		console.log({ user });
 		return user;
 	} catch (error) {
-		throw new Error(`Login failed: ${(error as Error).message}`);
+		catchError({ error, dispatch: data.dispatch });
+		throw error;
 	}
 };
 

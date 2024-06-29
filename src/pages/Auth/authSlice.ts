@@ -1,5 +1,6 @@
 /* eslint-disable no-param-reassign */
 import createAppSlice from '../../redux/createAppSlice';
+import { AppDispatch } from '../../redux/store';
 import { FetchLogin, fetchLogin } from './services/api';
 
 interface InitialStateAuth {
@@ -18,13 +19,9 @@ export const authSlice = createAppSlice({
 	name: 'auth',
 	initialState: initialStateAuth,
 	reducers: create => ({
-		post: create.reducer((state, action) => {}),
 		postLogin: create.asyncThunk(
 			async ({ email, password }: FetchLogin, thunkAPI) => {
-				const state = thunkAPI.getState() as { auth: InitialStateAuth };
-				console.log('Current state:', state.auth);
-				const response = await fetchLogin({ email, password });
-				console.log(response);
+				const response = await fetchLogin({ email, password, dispatch: thunkAPI.dispatch as AppDispatch });
 				return response;
 			},
 			{
@@ -33,14 +30,11 @@ export const authSlice = createAppSlice({
 				},
 				fulfilled: (state, { payload }) => {
 					console.log({ payload });
-					state.user = payload;
+					state.user = payload!;
 					state.status = 'success';
 				},
-				rejected: (state, { payload, error }) => {
-					console.log({ payload, error });
-
-					state.status = 'error';
-					state.error = [''];
+				rejected: state => {
+					state.status = 'idle';
 				},
 			}
 		),
