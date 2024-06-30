@@ -21,7 +21,6 @@ function useValidations() {
 			if (!schema) {
 				dispatch(
 					postMessage({
-						error: 'validation',
 						statusCode: 400,
 						message: `${name}: El campo "${name}" falta por validar`,
 					})
@@ -33,13 +32,12 @@ function useValidations() {
 			return { name, message: ``, stop: false };
 		} catch (error) {
 			if (error instanceof Yup.ValidationError) {
-				dispatch(
-					postMessage({
-						error: 'validation',
-						statusCode: 400,
-						message: `${name}: ${error.message}`,
-					})
-				);
+				// dispatch(
+				// 	postMessage({
+				// 		statusCode: 400,
+				// 		message: `${name}: ${error.message}`,
+				// 	})
+				// );
 				if (error.type && error.type === 'max') {
 					return { name, message: error.message, stop: true };
 				} else {

@@ -11,30 +11,14 @@ type InputName = 'email' | 'password';
 const props: UseAuthProps<ButtonIds, InputName> = {
 	component: 'login',
 	inputs: [
-		{ name: 'email', placeholder: 'Correo electrónico' },
-		{ name: 'password', placeholder: 'Contraseña' },
+		{ iName: 'email', iPlaceholder: 'Correo electrónico' },
+		{ iName: 'password', iPlaceholder: 'Contraseña' },
 	],
 	buttons: [
-		{
-			id: 'reset',
-			type: ButtonType.Link,
-			text: 'Restablecer',
-		},
-		{
-			id: 'login',
-			type: ButtonType.Dark,
-			text: 'Inicia Sesión',
-		},
-		{
-			id: 'registre',
-			type: ButtonType.Dark,
-			text: 'Crear Cuenta',
-		},
-		{
-			id: 'back',
-			type: ButtonType.Light,
-			text: 'Volver',
-		},
+		{ bId: 'reset', bType: ButtonType.Link, bText: 'Restablecer' },
+		{ bId: 'login', bType: ButtonType.Dark, bText: 'Inicia Sesión', bValidate: true },
+		{ bId: 'registre', bType: ButtonType.Dark, bText: 'Crear Cuenta' },
+		{ bId: 'back', bType: ButtonType.Light, bText: 'Volver' },
 	],
 };
 
@@ -59,9 +43,7 @@ export default function Login() {
 	};
 
 	useEffect(() => {
-		if (eventClick.value) {
-			handleClick();
-		}
+		eventClick.value && handleClick();
 	}, [eventClick]);
 
 	return <div>{Component}</div>;

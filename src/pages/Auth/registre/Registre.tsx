@@ -1,28 +1,43 @@
-import { useState } from 'react';
-import AuthLayout from '../common/AuthLayout/AuthLayout';
-import RegistreInput from './RegistreInput/RegistreInput';
-import RegistreButtons from './RegistreButtons/RegistreButtons';
-
-export type InitialStateRegistre = { username: string; password: string };
-
-export const initialStateRegistre: InitialStateRegistre = {
-	username: '',
-	password: '',
-};
+import { useEffect } from 'react';
+import useAuth from '../hooks/useAuth/useAuth';
+import useAppDispatch from '../../../hooks/useAppDispatch';
+import { postRegistre } from '../authSlice';
+import { ButtonType } from '../../../components/common/button/button.type';
+import { useNavigate } from 'react-router-dom';
 
 export default function Registre() {
-	const [stateRegistre, setStateRegistre] = useState<InitialStateRegistre>(initialStateRegistre);
+	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
+	const { Component, body, eventClick } = useAuth({
+		component: 'registre',
+		inputs: [
+			{ iName: 'name', iPlaceholder: 'Nombres' },
+			{ iName: 'lastName', iPlaceholder: 'Apellidos' },
+			{ iName: 'email', iPlaceholder: 'Correo electrónico' },
+			{ iName: 'phone', iPlaceholder: 'Teléfono' },
+		],
+		buttons: [
+			{ bId: `registre`, bType: ButtonType.Dark, bText: 'Registrar', bValidate: false },
+			{ bId: `back`, bType: ButtonType.Light, bText: 'Volver' },
+		],
+	});
 
-	return (
-		<AuthLayout>
-			<form className='registre'>
-				<section className='registre--input'>
-					<RegistreInput stateRegistre={stateRegistre} setStateRegistre={setStateRegistre} />
-				</section>
-				<section className='registre--buttons'>
-					<RegistreButtons />
-				</section>
-			</form>
-		</AuthLayout>
-	);
+	const handleClick = () => {
+		switch (eventClick.value) {
+			case 'back':
+				return navigate('/login');
+			case 'registre':
+				return dispatch(postRegistre(body));
+			default:
+				break;
+		}
+	};
+
+	useEffect(() => {
+		if (eventClick.value) {
+			handleClick();
+		}
+	}, [eventClick]);
+
+	return <div>{Component}</div>;
 }

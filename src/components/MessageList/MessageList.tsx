@@ -16,7 +16,7 @@ const MessageList: React.FC = () => {
 			if (generalMessages.length > 0) {
 				closeMessage(generalMessages[0].errorId);
 			}
-		}, 5000);
+		}, 10000);
 		return () => clearTimeout(timer);
 	}, [generalMessages]);
 

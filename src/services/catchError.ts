@@ -1,6 +1,6 @@
-import { ErrorApi } from "../interfaces/global";
-import { FetchLogin } from "../pages/Auth/services/api";
-import { postMessage } from "../redux/globalSlice";
+import { ErrorApi } from '../interfaces/global';
+import { FetchLogin } from '../pages/Auth/services/api';
+import { postMessage } from '../redux/globalSlice';
 
 const catchError = ({ error, dispatch }: { error: unknown; dispatch: FetchLogin['dispatch'] }) => {
 	if (typeof error === 'object' && error !== null && 'statusCode' in error) {

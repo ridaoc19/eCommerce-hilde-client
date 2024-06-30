@@ -14,7 +14,7 @@ const preview: Preview = {
 				<Story />
 			</Provider>
 		),
-		withRouter
+		withRouter,
 	],
 	parameters: {
 		viewport: {

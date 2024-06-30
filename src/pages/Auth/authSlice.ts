@@ -1,10 +1,10 @@
 /* eslint-disable no-param-reassign */
 import createAppSlice from '../../redux/createAppSlice';
 import { AppDispatch } from '../../redux/store';
-import { FetchLogin, fetchLogin } from './services/api';
+import { FetchLogin, fetchLogin, FetchRegistre, fetchRegistre, FetchReset, fetchReset } from './services/api';
 
 interface InitialStateAuth {
-	user: User | null;
+	user: GUser.User | null;
 	status: 'idle' | 'pending' | 'error' | 'success';
 	error: string[];
 }
@@ -29,9 +29,44 @@ export const authSlice = createAppSlice({
 					state.status = 'pending';
 				},
 				fulfilled: (state, { payload }) => {
-					console.log({ payload });
 					state.user = payload!;
 					state.status = 'success';
+				},
+				rejected: state => {
+					state.status = 'idle';
+				},
+			}
+		),
+		postReset: create.asyncThunk(
+			async ({ email }: Omit<FetchReset, 'dispatch'>, thunkAPI) => {
+				const response = await fetchReset({ email, dispatch: thunkAPI.dispatch as AppDispatch });
+				return response;
+			},
+			{
+				pending: state => {
+					state.status = 'pending';
+				},
+				fulfilled: state => {
+					state.status = 'success';
+					state.user = null;
+				},
+				rejected: state => {
+					state.status = 'idle';
+				},
+			}
+		),
+		postRegistre: create.asyncThunk(
+			async (data: Omit<FetchRegistre, 'dispatch'>, thunkAPI) => {
+				const response = await fetchRegistre({ ...data, dispatch: thunkAPI.dispatch as AppDispatch });
+				return response;
+			},
+			{
+				pending: state => {
+					state.status = 'pending';
+				},
+				fulfilled: state => {
+					state.status = 'success';
+					state.user = null;
 				},
 				rejected: state => {
 					state.status = 'idle';
@@ -41,4 +76,4 @@ export const authSlice = createAppSlice({
 	}),
 });
 
-export const { postLogin } = authSlice.actions;
+export const { postLogin, postReset, postRegistre } = authSlice.actions;

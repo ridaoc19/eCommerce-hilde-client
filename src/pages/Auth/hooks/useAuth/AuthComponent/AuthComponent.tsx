@@ -11,7 +11,7 @@ export interface AuthComponentProps<K extends string> {
 	component: string;
 	state: InitialState<K>[];
 	setState: Dispatch<SetStateAction<InitialState<K>[]>>;
-	buttons: Pick<ButtonProps, 'id' | 'text' | 'type'>[];
+	buttons: { bId: string; bText: ButtonProps['text']; bType: ButtonProps['type'] }[];
 	handleClick: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -32,40 +32,42 @@ export default function AuthComponent<K extends string>({
 				<form className='auth-component__form'>
 					<section className='auth-component__form--inputs'>
 						{state.map(stateItem => {
-							const { name, placeholder, error, disabled } = stateItem;
-							const svgType = SvgType[(name.charAt(0).toUpperCase() + name.slice(1)) as keyof typeof SvgType];
+							const { iName, iPlaceholder, disabled, error } = stateItem;
+							const svgType = SvgType[(iName.charAt(0).toUpperCase() + iName.slice(1)) as keyof typeof SvgType];
 							return (
 								<Input
-									key={name}
-									type={name}
-									name={name}
+									key={iName}
+									type={iName}
+									name={iName}
 									errorMessage={error}
 									handleOnChange={({ target: { value } }) => {
-										const { stop, message } = getValidationErrors({ name, value });
+										const { stop, message } = getValidationErrors({ name: iName, value });
 										setState(prevState =>
 											prevState.map(item =>
-												item.name === name ? { ...item, [name]: stop ? item[name as K] : value, error: message } : item
+												item.iName === iName
+													? { ...item, [iName]: stop ? item[iName as K] : value, error: message }
+													: item
 											)
 										);
 									}}
 									svgLeft={svgType}
 									disabled={disabled}
-									value={stateItem[name as K] as string}
-									placeholder={placeholder}
-									other_attributes={{ autoComplete: name === 'password' ? 'current-password' : name }}
+									value={stateItem[iName as K] as string}
+									placeholder={iPlaceholder}
+									other_attributes={{ autoComplete: iName === 'password' ? 'current-password' : iName }}
 								/>
 							);
 						})}
 					</section>
 					<section className='auth-component__form--buttons'>
-						{buttons.map(({ id, text, type }) => (
+						{buttons.map(({ bId, bText, bType }) => (
 							<Button
-								key={id}
-								id={`button__${component}--${id}`}
-								type={type}
-								text={text}
+								key={bId}
+								id={`button__${component}--${bId}`}
+								type={bType}
+								text={bText}
 								disabled={false}
-								value={id}
+								value={bId}
 								handleClick={handleClick}
 							/>
 						))}

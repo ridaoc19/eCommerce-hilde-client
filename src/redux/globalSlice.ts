@@ -1,13 +1,11 @@
 /* eslint-disable no-param-reassign */
 import { PayloadAction } from '@reduxjs/toolkit';
-import { ErrorApi } from '../interfaces/global';
 import generateUniqueId from '../utils/uuid';
 import createAppSlice from './createAppSlice';
 import { RootState } from './store';
 
 export interface Message {
 	message: string;
-	error: string;
 	statusCode: number;
 	errorId: string;
 	field: string;
@@ -36,13 +34,12 @@ export const globalSlice = createAppSlice({
 	name: 'global',
 	initialState: initialStateAuth,
 	reducers: create => ({
-		postMessage: create.reducer((state, { payload }: PayloadAction<ErrorApi>) => {
+		postMessage: create.reducer((state, { payload }: PayloadAction<Omit<Message, 'errorId' | 'field'>>) => {
 			if (Array.isArray(payload.message)) {
 				const newMessages: Message[] = payload.message.map(mess => {
 					return {
 						...parseErrorMessage(mess),
 						errorId: generateUniqueId(),
-						error: payload.error,
 						statusCode: payload.statusCode,
 					};
 				});
