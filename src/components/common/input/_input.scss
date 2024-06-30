@@ -2,7 +2,6 @@
 	@if $type==error {
 		> span {
 			border: 1px solid var(--error-6);
-			position: relative;
 
 			input::placeholder {
 				color: var(--error-4);
@@ -22,6 +21,8 @@
 .input {
 	position: relative;
 	margin-top: 0.5rem;
+	display: flex;
+	flex-direction: column;
 
 	&__label {
 		position: absolute;
@@ -34,12 +35,14 @@
 		font-size: small;
 		color: var(--base-font-light);
 		opacity: 0;
+		visibility: hidden;
 
 		&.active {
 			top: -0.5rem;
 			opacity: 1;
 			background-color: var(--base-light);
 			color: var(--base-fond);
+			visibility: visible;
 		}
 	}
 
@@ -56,7 +59,7 @@
 			display: flex;
 			gap: 0.3rem;
 			border-radius: var(--border-radius);
-			padding: 0.5rem;
+			padding: 0.8rem;
 			// height          : 1.8rem;
 			// padding         : 4px 11px;
 			// background-color: #ffffff;
@@ -89,6 +92,7 @@
 					color: var(--error-6);
 					text-align: center;
 					font-size: small;
+					min-height: 0.9rem;
 				}
 			}
 		}

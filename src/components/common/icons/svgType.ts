@@ -21,7 +21,7 @@ export enum SvgType {
 	Notifications = 'notifications', // 🔔
 	Logo = 'logo', // 🏷️
 	LogoTitle = 'logo-title', // 🏷️📛
-	Padlock = 'padlock', // 🔒
+	Password = 'password', // 🔒
 	Email = 'email', // 📧
 	NewEmail = 'newEmail', // ✉️
 	ArrowLeft = 'arrowLeft', // ⬅️

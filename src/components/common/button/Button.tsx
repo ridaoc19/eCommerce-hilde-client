@@ -16,7 +16,7 @@ function Button({
 	return (
 		<button
 			type='button'
-			id={id}
+			id={`button__${id}`}
 			className={`button button_${type}`}
 			onClick={handleClick}
 			value={value}

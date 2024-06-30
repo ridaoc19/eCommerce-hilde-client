@@ -48,5 +48,12 @@ module.exports = {
 			},
 		],
 		'react/require-default-props': 'off',
+		'react/function-component-definition': [
+			'error',
+			{
+				namedComponents: ['function-declaration', 'arrow-function'],
+				unnamedComponents: ['function-declaration', 'arrow-function'],
+			},
+		],
 	},
 };

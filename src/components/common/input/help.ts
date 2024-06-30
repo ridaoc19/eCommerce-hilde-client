@@ -1,4 +1,5 @@
 import _color from '../../../styles/main/global/_color';
+import { SvgType } from '../icons/svgType';
 
 export const getBorderColor = (errorMessage: string, value: string | number) => {
 	if (errorMessage) {
@@ -15,6 +16,17 @@ export const getSvgColor = (errorMessage: string | undefined) => {
 		return _color['--error-6'];
 	}
 	return '#848FAC';
+};
+
+export const svgTypePassword = (svgType: SvgType, toggle: boolean): SvgType => {
+	if (svgType !== SvgType.Password) {
+		return svgType;
+	}
+	if (toggle) {
+		return SvgType.OpenEye;
+	}
+
+	return SvgType.ClosedEye;
 };
 
 export const getInputType = (type: string | undefined, toggle: boolean) => {
