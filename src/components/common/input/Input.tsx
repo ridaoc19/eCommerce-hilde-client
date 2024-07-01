@@ -28,9 +28,10 @@ function Input({
 	value,
 	disabled,
 	other_attributes,
-	type,
+	type = 'text',
 }: InputProps) {
 	const [toggle, setToggle] = useState(false);
+	const newSvgLeft = svgLeft === ('newPassword' as SvgType) ? SvgType.Password : svgLeft;
 
 	const handleOnClick = (event: MouseEvent<HTMLButtonElement>) => {
 		event.preventDefault();
@@ -57,9 +58,9 @@ function Input({
 					}}
 				>
 					<span className={`input__svg-left${name && `--${name}`}`}>
-						{svgLeft &&
+						{newSvgLeft &&
 							Svg({
-								type: svgLeft,
+								type: newSvgLeft,
 								height: 16,
 								width: 16,
 								color: getSvgColor(errorMessage),
@@ -85,9 +86,9 @@ function Input({
 						tabIndex={0}
 					>
 						{svgRight ||
-							(svgLeft === SvgType.Password &&
+							(newSvgLeft === SvgType.Password &&
 								Svg({
-									type: svgTypePassword(svgLeft, toggle),
+									type: svgTypePassword(newSvgLeft, toggle),
 									height: 16,
 									width: 16,
 									color: getSvgColor(errorMessage),

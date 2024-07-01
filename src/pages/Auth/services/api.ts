@@ -111,3 +111,37 @@ export const fetchRegistre = async (data: FetchRegistre) => {
 		throw error;
 	}
 };
+
+// ! CHANGE
+export interface FetchChange extends Pick<GUser.User, 'email'> {
+	password: string;
+	newPassword: string;
+	dispatch: AppDispatch;
+}
+export const fetchChange = async (data: FetchChange) => {
+	try {
+		const response = await fetch(`${import.meta.env.VITE_SERVER}/users/change`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(data),
+		});
+
+		if (!response.ok) {
+			const errorResponse: ErrorApi = await response.json();
+			throw errorResponse;
+		}
+		const { message, statusCode }: Omit<GUser.UserApi, 'data'> = await response.json();
+		data.dispatch(
+			postMessage({
+				message,
+				statusCode,
+			})
+		);
+		return true;
+	} catch (error) {
+		catchError({ error, dispatch: data.dispatch });
+		throw error;
+	}
+};

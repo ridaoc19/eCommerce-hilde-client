@@ -3,6 +3,7 @@ import MessageList from '../components/MessageList/MessageList';
 import Login from '../pages/Auth/Login/Login';
 import Registre from '../pages/Auth/registre/Registre';
 import Reset from '../pages/Auth/Reset/Reset';
+import Change from '../pages/Auth/change/Change';
 
 const router = createBrowserRouter([
 	{
@@ -33,6 +34,15 @@ const router = createBrowserRouter([
 					<>
 						<MessageList />
 						<Reset />
+					</>
+				),
+			},
+			{
+				path: 'change',
+				element: (
+					<>
+						<MessageList />
+						<Change />
 					</>
 				),
 			},

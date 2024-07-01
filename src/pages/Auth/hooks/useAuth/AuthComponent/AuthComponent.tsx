@@ -33,7 +33,8 @@ export default function AuthComponent<K extends string>({
 					<section className='auth-component__form--inputs'>
 						{state.map(stateItem => {
 							const { iName, iPlaceholder, disabled, error } = stateItem;
-							const svgType = SvgType[(iName.charAt(0).toUpperCase() + iName.slice(1)) as keyof typeof SvgType];
+							const svgType =
+								SvgType[(iName.charAt(0).toUpperCase() + iName.slice(1)) as keyof typeof SvgType] || iName;
 							return (
 								<Input
 									key={iName}
@@ -54,7 +55,10 @@ export default function AuthComponent<K extends string>({
 									disabled={disabled}
 									value={stateItem[iName as K] as string}
 									placeholder={iPlaceholder}
-									other_attributes={{ autoComplete: iName === 'password' ? 'current-password' : iName }}
+									other_attributes={{
+										autoComplete:
+											iName === 'password' ? 'current-password' : iName === 'newPassword' ? 'new-password' : iName,
+									}}
 								/>
 							);
 						})}

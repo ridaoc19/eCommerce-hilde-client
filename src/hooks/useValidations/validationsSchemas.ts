@@ -16,7 +16,9 @@ const userSchemas: { [key: string]: Yup.Schema } = {
 	//   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
 	//   'La contraseña debe contener al menos una letra, un número y un carácter especial (@$!%*?&)'
 	// ),
-	newPassword: Yup.string(),
+	newPassword: Yup.string()
+		.required('Repetir contraseña es requerido')
+		.min(6, 'La contraseña debe tener los mismos caracteres que la nueva contraseña'),
 	name: Yup.string()
 		.required('El nombre es obligatorio')
 		.min(2, 'Ingrese al menos 2 caracteres para el nombre')
