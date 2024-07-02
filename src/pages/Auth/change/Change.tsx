@@ -18,7 +18,7 @@ export default function Change() {
 			{ iName: 'newPassword', iPlaceholder: 'Nueva contraseña' },
 		],
 		buttons: [
-			{ bId: 'login', bType: ButtonType.Dark, bText: 'Cambiar Contraseña', bValidate: false },
+			{ bId: 'login', bType: ButtonType.Dark, bText: 'Cambiar Contraseña', bValidate: true },
 			{ bId: 'back', bType: ButtonType.Light, bText: 'Volver' },
 		],
 	});

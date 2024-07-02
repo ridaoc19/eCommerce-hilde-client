@@ -14,7 +14,7 @@ export default function Reset() {
 		component: 'reset',
 		inputs: [{ iName: 'email', iPlaceholder: 'Correo electrónico' }],
 		buttons: [
-			{ bId: `reset`, bType: ButtonType.Dark, bText: 'Restablece contraseña', bValidate: false },
+			{ bId: `reset`, bType: ButtonType.Dark, bText: 'Restablece contraseña', bValidate: true },
 			{ bId: `back`, bType: ButtonType.Light, bText: 'Volver' },
 		],
 	});

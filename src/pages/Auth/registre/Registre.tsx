@@ -19,7 +19,7 @@ export default function Registre() {
 			{ iName: 'phone', iPlaceholder: 'Teléfono' },
 		],
 		buttons: [
-			{ bId: `registre`, bType: ButtonType.Dark, bText: 'Registrar', bValidate: false },
+			{ bId: `registre`, bType: ButtonType.Dark, bText: 'Registrar', bValidate: true },
 			{ bId: `back`, bType: ButtonType.Light, bText: 'Volver' },
 		],
 	});

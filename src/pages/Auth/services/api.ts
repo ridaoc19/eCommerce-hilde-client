@@ -145,3 +145,35 @@ export const fetchChange = async (data: FetchChange) => {
 		throw error;
 	}
 };
+
+// ! TOKEN
+export interface FetchToken extends Pick<GUser.User, 'access_token'> {
+	dispatch: AppDispatch;
+}
+export const fetchToken = async ({ access_token, dispatch }: FetchToken) => {
+	try {
+		const response = await fetch(`${import.meta.env.VITE_SERVER}/auth/token`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${access_token}`,
+			},
+		});
+
+		if (!response.ok) {
+			const errorResponse: ErrorApi = await response.json();
+			throw errorResponse;
+		}
+		const { message, statusCode, data }: GUser.UserApi = await response.json();
+		dispatch(
+			postMessage({
+				message,
+				statusCode,
+			})
+		);
+		return data;
+	} catch (error) {
+		catchError({ error, dispatch: dispatch });
+		throw error;
+	}
+};

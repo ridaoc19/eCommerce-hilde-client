@@ -11,6 +11,8 @@ import {
 	fetchRegistre,
 	FetchReset,
 	fetchReset,
+	fetchToken,
+	FetchToken,
 } from './services/api';
 import { postMessage } from '../../redux/globalSlice';
 
@@ -46,7 +48,7 @@ export const authSlice = createAppSlice({
 					state.status = 'pending';
 				},
 				fulfilled: (state, { payload }) => {
-					state.user = payload!;
+					state.user = payload;
 					state.status = 'success';
 				},
 				rejected: state => {
@@ -124,8 +126,26 @@ export const authSlice = createAppSlice({
 				},
 			}
 		),
+		postToken: create.asyncThunk(
+			async ({ access_token }: Omit<FetchToken, 'dispatch'>, thunkAPI) => {
+				const response = await fetchToken({ access_token, dispatch: thunkAPI.dispatch as AppDispatch });
+				return response;
+			},
+			{
+				pending: state => {
+					state.status = 'pending';
+				},
+				fulfilled: (state, { payload }) => {
+					state.user = payload;
+					state.status = 'success';
+				},
+				rejected: state => {
+					state.status = 'error';
+				},
+			}
+		),
 	}),
 });
 
-export const { postLogin, postReset, postRegistre, postChange, updateAuthState } = authSlice.actions;
+export const { postLogin, postReset, postRegistre, postChange, updateAuthState, postToken } = authSlice.actions;
 export const authState = (state: RootState) => state.auth;
