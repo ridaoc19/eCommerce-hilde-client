@@ -1,7 +1,11 @@
 export default {
-	'--font-light': 'white',
-	'--font-dark': '#0a0f17',
-	'--font-accent': '#ff0d58',
+	'--base-light': 'white',
+	'--base-dark': '#04080e',
+	'--base-font': '#0f141c',
+	'--base-main': '#ff0d58',
+	'--base-border': '#ccc',
+	'--base-font-light': '#a9a9a9',
+	'--box-shadow': '0 2px 8px rgba(0, 0, 0, 0.15)',
 
 	'--brand-9': '#0f141c',
 	'--brand-8': '#161e2a',

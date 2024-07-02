@@ -1,10 +1,14 @@
 import { ChangeEvent, MouseEvent } from 'react';
 
-export type HandleClick = (event: MouseEvent<HTMLButtonElement>) => void;
-export type HandleChangeText = (event: ChangeEvent<HTMLInputElement>) => void;
-export type HandleChangeTextArea = (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
-export type handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => void;
-export type HandleChangeTextSelect = (
+declare type HandleClick = (event: MouseEvent<HTMLButtonElement>) => void;
+declare type HandleChangeText = (event: ChangeEvent<HTMLInputElement>) => void;
+declare type HandleChangeTextArea = (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+declare type HandleChangeTextSelect = (
 	data: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>
 ) => void;
-export type handleOnKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => void;
+
+declare interface ErrorApi {
+	message: string[] | string;
+	error: string;
+	statusCode: number;
+}

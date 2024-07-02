@@ -3,15 +3,14 @@ $base-font-size: 16px;
 body {
 	margin: 0;
 	padding: 0;
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-		sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+		'Droid Sans', 'Helvetica Neue', sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	font-size: $base-font-size;
 
 	font-size: 14px;
-	color: #333;
+	color: var(--base-font);
 }
 
 @media only screen and (min-width: 600px) {
@@ -33,8 +32,7 @@ body {
 }
 
 code {
-	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-		monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 	font-size: 1rem;
 
 	@media (min-width: 768px) {
@@ -51,7 +49,7 @@ code {
 }
 
 a {
-	color: var(--font-brand);
+	color: var(--base-font);
 	text-decoration: none;
 }
 
