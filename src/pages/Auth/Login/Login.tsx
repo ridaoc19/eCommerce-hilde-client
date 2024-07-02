@@ -40,17 +40,19 @@ export default function Login() {
 			case 'login':
 				return dispatch(postLogin(body));
 			default:
-				break;
+				return null;
 		}
 	};
 
 	useEffect(() => {
-		eventClick.value && handleClick();
+		if (eventClick.value) {
+			handleClick();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [eventClick]);
 
 	useEffect(() => {
 		if (status === 'success' && user) {
-			console.log({ status, user });
 			if (!user.verified) {
 				dispatch(updateAuthState({ status: 'idle' }));
 				navigate('/change');
@@ -61,8 +63,8 @@ export default function Login() {
 			}
 			dispatch(updateAuthState({ status: 'idle' }));
 			navigate('/');
-			return;
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [status, user]);
 
 	return <div>{Component}</div>;

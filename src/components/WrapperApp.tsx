@@ -11,6 +11,7 @@ const WrapperApp = ({ children }: { children: ReactNode }) => {
 		if (localStorage?.token && status === 'idle' && !user) {
 			dispatch(postToken({ access_token: localStorage.token }));
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
@@ -22,6 +23,7 @@ const WrapperApp = ({ children }: { children: ReactNode }) => {
 		if (status === 'success') {
 			dispatch(updateAuthState({ status: 'idle' }));
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [status]);
 
 	return (

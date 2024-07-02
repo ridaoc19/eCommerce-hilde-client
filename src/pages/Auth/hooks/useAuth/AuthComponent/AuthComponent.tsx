@@ -38,6 +38,16 @@ export default function AuthComponent<K extends string>({
 							const { iName, iPlaceholder, disabled, error } = stateItem;
 							const svgType =
 								SvgType[(iName.charAt(0).toUpperCase() + iName.slice(1)) as keyof typeof SvgType] || iName;
+
+							let autoCompleteValue;
+							if (iName === 'password') {
+								autoCompleteValue = 'current-password';
+							} else if (iName === 'newPassword') {
+								autoCompleteValue = 'new-password';
+							} else {
+								autoCompleteValue = iName;
+							}
+
 							return (
 								<Input
 									key={iName}
@@ -59,8 +69,7 @@ export default function AuthComponent<K extends string>({
 									value={stateItem[iName as K] as string}
 									placeholder={iPlaceholder}
 									other_attributes={{
-										autoComplete:
-											iName === 'password' ? 'current-password' : iName === 'newPassword' ? 'new-password' : iName,
+										autoComplete: autoCompleteValue,
 									}}
 								/>
 							);

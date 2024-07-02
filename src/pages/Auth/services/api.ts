@@ -1,6 +1,5 @@
-import { ErrorApi } from '../../../interfaces/global';
+import type { AppDispatch } from '../../../redux/store';
 import { postMessage } from '../../../redux/globalSlice';
-import { AppDispatch } from '../../../redux/store';
 import catchError from '../../../services/catchError';
 
 // ! LOGIN
@@ -24,7 +23,7 @@ export const fetchLogin = async (data: FetchLogin): Promise<GUser.User> => {
 		});
 
 		if (!response.ok) {
-			const errorResponse: ErrorApi = await response.json();
+			const errorResponse = await response.json();
 			throw errorResponse;
 		}
 		const { data: user, message, statusCode }: GUser.UserApi = await response.json();
@@ -62,7 +61,7 @@ export const fetchReset = async (data: FetchReset) => {
 		});
 
 		if (!response.ok) {
-			const errorResponse: ErrorApi = await response.json();
+			const errorResponse = await response.json();
 			throw errorResponse;
 		}
 		const { message, statusCode }: Omit<GUser.UserApi, 'data'> = await response.json();
@@ -95,7 +94,7 @@ export const fetchRegistre = async (data: FetchRegistre) => {
 		});
 
 		if (!response.ok) {
-			const errorResponse: ErrorApi = await response.json();
+			const errorResponse = await response.json();
 			throw errorResponse;
 		}
 		const { message, statusCode }: Omit<GUser.UserApi, 'data'> = await response.json();
@@ -129,7 +128,7 @@ export const fetchChange = async (data: FetchChange) => {
 		});
 
 		if (!response.ok) {
-			const errorResponse: ErrorApi = await response.json();
+			const errorResponse = await response.json();
 			throw errorResponse;
 		}
 		const { message, statusCode }: Omit<GUser.UserApi, 'data'> = await response.json();
@@ -150,7 +149,7 @@ export const fetchChange = async (data: FetchChange) => {
 export interface FetchToken extends Pick<GUser.User, 'access_token'> {
 	dispatch: AppDispatch;
 }
-export const fetchToken = async ({ access_token, dispatch }: FetchToken) => {
+export const fetchToken = async ({ access_token, dispatch }: FetchToken): Promise<GUser.User> => {
 	try {
 		const response = await fetch(`${import.meta.env.VITE_SERVER}/auth/token`, {
 			method: 'GET',
@@ -161,7 +160,7 @@ export const fetchToken = async ({ access_token, dispatch }: FetchToken) => {
 		});
 
 		if (!response.ok) {
-			const errorResponse: ErrorApi = await response.json();
+			const errorResponse = await response.json();
 			throw errorResponse;
 		}
 		const { message, statusCode, data }: GUser.UserApi = await response.json();
@@ -173,7 +172,7 @@ export const fetchToken = async ({ access_token, dispatch }: FetchToken) => {
 		);
 		return data;
 	} catch (error) {
-		catchError({ error, dispatch: dispatch });
+		catchError({ error, dispatch });
 		throw error;
 	}
 };

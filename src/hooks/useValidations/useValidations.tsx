@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 import { postMessage } from '../../redux/globalSlice';
 import useAppDispatch from '../useAppDispatch';
-import { validationSchemas } from './validationsSchemas';
+import validationSchemas from './validationsSchemas';
 
 export interface ResponseError {
 	name: string | 'general';
@@ -40,12 +40,10 @@ function useValidations() {
 				// );
 				if (error.type && error.type === 'max') {
 					return { name, message: error.message, stop: true };
-				} else {
-					return { name, message: error.message, stop: false };
 				}
-			} else {
-				return { name, message: ``, stop: false };
+				return { name, message: error.message, stop: false };
 			}
+			return { name, message: ``, stop: false };
 		}
 	};
 

@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-import useAuth from '../hooks/useAuth/useAuth';
-import useAppDispatch from '../../../hooks/useAppDispatch';
-import { authState, postRegistre, updateAuthState } from '../authSlice';
-import { ButtonType } from '../../../components/common/button/button.type';
 import { useNavigate } from 'react-router-dom';
+import { ButtonType } from '../../../components/common/button/button.type';
+import useAppDispatch from '../../../hooks/useAppDispatch';
 import useAppSelector from '../../../hooks/useAppSelector';
+import { authState, postRegistre, updateAuthState } from '../authSlice';
+import useAuth from '../hooks/useAuth/useAuth';
 
 export default function Registre() {
 	const dispatch = useAppDispatch();
@@ -31,7 +31,7 @@ export default function Registre() {
 			case 'registre':
 				return dispatch(postRegistre(body));
 			default:
-				break;
+				return null;
 		}
 	};
 
@@ -39,6 +39,7 @@ export default function Registre() {
 		if (eventClick.value) {
 			handleClick();
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [eventClick]);
 
 	useEffect(() => {
@@ -46,6 +47,7 @@ export default function Registre() {
 			dispatch(updateAuthState({ status: 'idle' }));
 			navigate('/login');
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [status]);
 
 	return <div>{Component}</div>;

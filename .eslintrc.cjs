@@ -52,7 +52,7 @@ module.exports = {
 			'error',
 			{
 				namedComponents: ['function-declaration', 'arrow-function'],
-				unnamedComponents: ['function-declaration', 'arrow-function'],
+				unnamedComponents: 'arrow-function',
 			},
 		],
 	},

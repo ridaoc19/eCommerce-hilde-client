@@ -30,7 +30,7 @@ export default function Change() {
 			case 'login':
 				return dispatch(postChange(body));
 			default:
-				break;
+				return null;
 		}
 	};
 
@@ -44,10 +44,14 @@ export default function Change() {
 			);
 			navigate('/login');
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
-		eventClick.value && handleClick();
+		if (eventClick.value) {
+			handleClick();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [eventClick]);
 
 	useEffect(() => {
@@ -55,6 +59,7 @@ export default function Change() {
 			dispatch(updateAuthState({ status: 'idle' }));
 			navigate('/login');
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [status]);
 
 	return <div>{Component}</div>;
