@@ -5,6 +5,7 @@ import Registre from '../pages/Auth/registre/Registre';
 import Reset from '../pages/Auth/Reset/Reset';
 import Home from '../pages/Home/Home';
 import ProtectedAuth from './common/ProtectedAuth';
+import Layout from '../components/layout/Layout';
 
 const Auth = {
 	path: '/',
@@ -32,7 +33,11 @@ const Auth = {
 const Feature = [
 	{
 		path: '/',
-		element: <Home />,
+		element: (
+			<Layout>
+				<Home />
+			</Layout>
+		),
 	},
 	{ path: '*', element: <div>No Found</div> },
 ];
