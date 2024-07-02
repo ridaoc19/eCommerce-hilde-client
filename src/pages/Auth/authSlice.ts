@@ -1,19 +1,9 @@
 /* eslint-disable no-param-reassign */
 import { PayloadAction } from '@reduxjs/toolkit';
 import createAppSlice from '../../redux/createAppSlice';
-import { AppDispatch, RootState } from '../../redux/store';
-import {
-	fetchChange,
-	FetchChange,
-	FetchLogin,
-	fetchLogin,
-	FetchRegistre,
-	fetchRegistre,
-	FetchReset,
-	fetchReset,
-	fetchToken,
-	FetchToken,
-} from './services/api';
+import type { AppDispatch, RootState } from '../../redux/store';
+import { fetchChange, fetchLogin, fetchRegistre, fetchReset, fetchToken } from './services/api';
+import type { FetchChange, FetchLogin, FetchRegistre, FetchReset, FetchToken } from './services/api';
 import { postMessage } from '../../redux/globalSlice';
 
 interface InitialStateAuth {
@@ -104,14 +94,16 @@ export const authSlice = createAppSlice({
 							statusCode: 400,
 						})
 					);
-					throw thunkAPI.rejectWithValue({ error: 'email no valido' });
 				}
-				const response = await fetchChange({
-					...data,
-					email: user.email,
-					dispatch: thunkAPI.dispatch as AppDispatch,
-				});
-				return response;
+				if (user) {
+					const response = await fetchChange({
+						...data,
+						email: user.email,
+						dispatch: thunkAPI.dispatch as AppDispatch,
+					});
+					return response;
+				}
+				return null;
 			},
 			{
 				pending: state => {

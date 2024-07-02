@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent, ReactNode } from 'react';
+import { ChangeEvent, MouseEvent } from 'react';
 
 declare type HandleClick = (event: MouseEvent<HTMLButtonElement>) => void;
 declare type HandleChangeText = (event: ChangeEvent<HTMLInputElement>) => void;

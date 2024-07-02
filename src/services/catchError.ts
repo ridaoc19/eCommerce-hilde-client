@@ -1,28 +1,25 @@
-import { ErrorApi } from '../interfaces/global';
-import { FetchLogin } from '../pages/Auth/services/api';
+import type { ErrorApi } from '../interfaces/global';
+import type { AppDispatch } from '../redux/store';
 import { postMessage } from '../redux/globalSlice';
 
-const catchError = ({ error, dispatch }: { error: unknown; dispatch: FetchLogin['dispatch'] }) => {
+const catchError = ({ error, dispatch }: { error: unknown; dispatch: AppDispatch }) => {
 	if (typeof error === 'object' && error !== null && 'statusCode' in error) {
 		const errorApi = error as ErrorApi;
-		dispatch(postMessage(errorApi));
-		throw errorApi;
+		dispatch(postMessage({ message: errorApi.message, statusCode: errorApi.statusCode }));
 	} else if (error instanceof Error) {
-		const errorMessage: ErrorApi = {
-			message: [error.message],
-			error: 'Login failed',
-			statusCode: 500,
-		};
-		dispatch(postMessage(errorMessage));
-		throw errorMessage;
+		dispatch(
+			postMessage({
+				message: [error.message],
+				statusCode: 500,
+			})
+		);
 	} else {
-		const errorMessage: ErrorApi = {
-			message: 'Unexpected error occurred',
-			error: 'Login failed',
-			statusCode: 500,
-		};
-		dispatch(postMessage(errorMessage));
-		throw errorMessage;
+		dispatch(
+			postMessage({
+				message: 'Error desconocido',
+				statusCode: 500,
+			})
+		);
 	}
 };
 

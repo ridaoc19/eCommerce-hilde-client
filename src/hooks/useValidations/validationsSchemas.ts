@@ -66,4 +66,4 @@ const advertisingSchemas: { [key: string]: Yup.Schema } = {
 
 const validationSchemas = { ...advertisingSchemas, ...userSchemas };
 
-export { validationSchemas };
+export default validationSchemas;

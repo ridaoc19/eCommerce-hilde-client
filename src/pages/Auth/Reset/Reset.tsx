@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ButtonType } from '../../../components/common/button/button.type';
 import useAuth from '../hooks/useAuth/useAuth';
 import useAppDispatch from '../../../hooks/useAppDispatch';
-import { useNavigate } from 'react-router-dom';
 import { authState, postReset, updateAuthState } from '../authSlice';
 import useAppSelector from '../../../hooks/useAppSelector';
 
@@ -26,12 +26,15 @@ export default function Reset() {
 			case 'reset':
 				return dispatch(postReset(body));
 			default:
-				break;
+				return null;
 		}
 	};
 
 	useEffect(() => {
-		eventClick.value && handleClick();
+		if (eventClick.value) {
+			handleClick();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [eventClick]);
 
 	useEffect(() => {
@@ -39,6 +42,7 @@ export default function Reset() {
 			dispatch(updateAuthState({ status: 'idle' }));
 			navigate('/login');
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [status]);
 
 	return <div>{Component}</div>;
