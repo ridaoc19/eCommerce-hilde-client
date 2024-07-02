@@ -6,12 +6,14 @@ import { SvgType } from '../../../../../components/common/icons/svgType';
 import Input from '../../../../../components/common/input/Input';
 import useValidations from '../../../../../hooks/useValidations/useValidations';
 import type { InitialState } from '../useAuth';
+import useAppSelector from '../../../../../hooks/useAppSelector';
+import { authState } from '../../../authSlice';
 
 export interface AuthComponentProps<K extends string> {
 	component: string;
 	state: InitialState<K>[];
 	setState: Dispatch<SetStateAction<InitialState<K>[]>>;
-	buttons: { bId: string; bText: ButtonProps['text']; bType: ButtonProps['type'] }[];
+	buttons: { bId: string; bText: ButtonProps['text']; bType: ButtonProps['type']; bValidate?: boolean }[];
 	handleClick: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -22,6 +24,7 @@ export default function AuthComponent<K extends string>({
 	component,
 	handleClick,
 }: AuthComponentProps<K>) {
+	const { status } = useAppSelector(authState);
 	const { getValidationErrors } = useValidations();
 	return (
 		<div className='auth-component-container'>
@@ -33,7 +36,8 @@ export default function AuthComponent<K extends string>({
 					<section className='auth-component__form--inputs'>
 						{state.map(stateItem => {
 							const { iName, iPlaceholder, disabled, error } = stateItem;
-							const svgType = SvgType[(iName.charAt(0).toUpperCase() + iName.slice(1)) as keyof typeof SvgType];
+							const svgType =
+								SvgType[(iName.charAt(0).toUpperCase() + iName.slice(1)) as keyof typeof SvgType] || iName;
 							return (
 								<Input
 									key={iName}
@@ -54,19 +58,23 @@ export default function AuthComponent<K extends string>({
 									disabled={disabled}
 									value={stateItem[iName as K] as string}
 									placeholder={iPlaceholder}
-									other_attributes={{ autoComplete: iName === 'password' ? 'current-password' : iName }}
+									other_attributes={{
+										autoComplete:
+											iName === 'password' ? 'current-password' : iName === 'newPassword' ? 'new-password' : iName,
+									}}
 								/>
 							);
 						})}
 					</section>
 					<section className='auth-component__form--buttons'>
-						{buttons.map(({ bId, bText, bType }) => (
+						{buttons.map(({ bId, bText, bType, bValidate }) => (
 							<Button
 								key={bId}
 								id={`button__${component}--${bId}`}
 								type={bType}
 								text={bText}
-								disabled={false}
+								isLoading={status === 'pending' && !!bValidate}
+								disabled={status === 'pending'}
 								value={bId}
 								handleClick={handleClick}
 							/>

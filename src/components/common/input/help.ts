@@ -29,12 +29,12 @@ export const svgTypePassword = (svgType: SvgType, toggle: boolean): SvgType => {
 	return SvgType.ClosedEye;
 };
 
-export const getInputType = (type: string | undefined, toggle: boolean) => {
-	if (type !== 'password') {
-		return type;
-	}
-	if (toggle) {
-		return 'text';
+export const getInputType = (type: string, toggle: boolean) => {
+	if (['password', 'newPassword'].includes(type)) {
+		if (toggle) {
+			return 'text';
+		}
+		return 'password';
 	}
 
 	return type;

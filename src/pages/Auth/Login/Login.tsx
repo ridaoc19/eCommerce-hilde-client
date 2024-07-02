@@ -2,8 +2,9 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ButtonType } from '../../../components/common/button/button.type';
 import useAppDispatch from '../../../hooks/useAppDispatch';
-import { postLogin } from '../authSlice';
+import { authState, postLogin, updateAuthState } from '../authSlice';
 import useAuth, { UseAuthProps } from '../hooks/useAuth/useAuth';
+import useAppSelector from '../../../hooks/useAppSelector';
 
 type ButtonIds = 'reset' | 'login' | 'registre' | 'back';
 type InputName = 'email' | 'password';
@@ -25,6 +26,7 @@ const props: UseAuthProps<ButtonIds, InputName> = {
 export default function Login() {
 	const { Component, eventClick, body } = useAuth<ButtonIds, InputName>(props);
 	const dispatch = useAppDispatch();
+	const { status, user } = useAppSelector(authState);
 	const navigate = useNavigate();
 
 	const handleClick = () => {
@@ -45,6 +47,23 @@ export default function Login() {
 	useEffect(() => {
 		eventClick.value && handleClick();
 	}, [eventClick]);
+
+	useEffect(() => {
+		if (status === 'success' && user) {
+			console.log({ status, user });
+			if (!user.verified) {
+				dispatch(updateAuthState({ status: 'idle' }));
+				navigate('/change');
+				return;
+			}
+			if (!user.verifiedEmail) {
+				dispatch(updateAuthState({ user: null, status: 'idle' }));
+			}
+			dispatch(updateAuthState({ status: 'idle' }));
+			navigate('/');
+			return;
+		}
+	}, [status, user]);
 
 	return <div>{Component}</div>;
 }

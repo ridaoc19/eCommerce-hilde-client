@@ -3,10 +3,12 @@ import { ButtonType } from '../../../components/common/button/button.type';
 import useAuth from '../hooks/useAuth/useAuth';
 import useAppDispatch from '../../../hooks/useAppDispatch';
 import { useNavigate } from 'react-router-dom';
-import { postReset } from '../authSlice';
+import { authState, postReset, updateAuthState } from '../authSlice';
+import useAppSelector from '../../../hooks/useAppSelector';
 
 export default function Reset() {
 	const dispatch = useAppDispatch();
+	const { status } = useAppSelector(authState);
 	const navigate = useNavigate();
 	const { Component, body, eventClick } = useAuth({
 		component: 'reset',
@@ -31,6 +33,13 @@ export default function Reset() {
 	useEffect(() => {
 		eventClick.value && handleClick();
 	}, [eventClick]);
+
+	useEffect(() => {
+		if (status === 'success') {
+			dispatch(updateAuthState({ status: 'idle' }));
+			navigate('/login');
+		}
+	}, [status]);
 
 	return <div>{Component}</div>;
 }

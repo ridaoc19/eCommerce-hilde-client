@@ -1,5 +1,6 @@
 import _color from '../../../styles/main/global/_color';
 import Svg from '../icons/Svg';
+import Spinner from '../spinner';
 import { ButtonProps, ButtonType } from './button.type';
 
 function Button({
@@ -7,6 +8,7 @@ function Button({
 	type,
 	handleClick,
 	text,
+	isLoading = false,
 	value = '',
 	disabled = false,
 	other_attributes = {},
@@ -39,7 +41,7 @@ function Button({
 			)}
 			{text && (
 				<span className='button__text-container'>
-					<div>{text}</div>
+					<div>{isLoading ? <Spinner /> : text}</div>
 				</span>
 			)}
 			{svgRight && (
