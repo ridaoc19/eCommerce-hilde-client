@@ -9,7 +9,7 @@ function Footer() {
 			<div className='footer__container'>
 				<div className='footer__top'>
 					<div className='footer__top-left'>
-						<div className='footer__top-left-logo'>{Svg({ type: SvgType.LogoTitle, height: 80, width: 80 })}</div>
+						<div className='footer__top-left-logo'>{Svg({ type: SvgType.Logo, height: 80, width: 80 })}</div>
 					</div>
 
 					<div className='footer__top-center'>
@@ -43,7 +43,7 @@ function Footer() {
 									svgRight={SvgType.Location}
 								/>
 								<Button
-									type={ButtonType.None}
+									type={ButtonType.Link}
 									text='Lunes - Viernes de 8 AM - 6 PM'
 									handleClick={() => {}}
 									id='time'

@@ -19,7 +19,7 @@ export interface ButtonProps {
 	type: ButtonType;
 	text: string | ReactNode;
 	handleClick: HandleClick;
-	isLoading: boolean;
+	isLoading?: boolean;
 
 	svgRight?: SvgType | null;
 	svgLeft?: SvgType | null;
