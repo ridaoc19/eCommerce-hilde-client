@@ -25,7 +25,7 @@ const MessageList: React.FC = () => {
 	const { mediaQuery } = useMediaQuery();
 
 	const closeMessage = (errorId: Message['errorId']) => {
-		dispatch(deleteMessage([errorId]));
+		dispatch(deleteMessage([{ errorId }]));
 	};
 
 	useEffect(() => {

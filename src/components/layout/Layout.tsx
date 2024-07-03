@@ -2,6 +2,8 @@ import { ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
 import Footer from './footer';
 import Navbar from './navbar/Navbar';
+import { SvgType } from '../common/icons/svgType';
+import Input from '../common/input/Input';
 
 export namespace ILayout {
 	export type LayoutProps = {
@@ -21,7 +23,14 @@ function Layout({ children }: ILayout.LayoutProps) {
 					</div>
 					{pathname !== '/dashboard' && (
 						<div className='layout__navbar-search'>
-							<input type='text' placeholder='Buscar' />
+							<form>
+								<Input
+									name='search'
+									svgLeft={SvgType.Search}
+									placeholder='buscar'
+									result={({ value }) => console.log(value)}
+								/>
+							</form>
 						</div>
 					)}
 				</div>
