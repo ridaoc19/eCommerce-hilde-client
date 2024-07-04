@@ -10,7 +10,7 @@ export interface SidebarLeftProps {
 	isOpenMenu: boolean;
 	handleOnClick: (isOpen: boolean) => void;
 	setSelectedId: Dispatch<string>;
-	data: { id: string; text: string }[];
+	data: { id: string; text: string; svgLeft?: SvgType }[];
 }
 
 export default function SidebarLeft({ handleOnClick, isOpenMenu, setSelectedId, data }: SidebarLeftProps) {
@@ -28,7 +28,7 @@ export default function SidebarLeft({ handleOnClick, isOpenMenu, setSelectedId, 
 			</div>
 
 			<div className='sidebar-left__main'>
-				{data.map(({ id, text }) => (
+				{data.map(({ id, text, svgLeft }) => (
 					<div
 						key={id}
 						onClick={() => setSelectedId(id)}
@@ -39,6 +39,7 @@ export default function SidebarLeft({ handleOnClick, isOpenMenu, setSelectedId, 
 						aria-label='selected id'
 					>
 						<Button
+							svgLeft={svgLeft}
 							svgRight={SvgType.ArrowRight}
 							type={ButtonType.Highlighter}
 							text={text}

@@ -15,13 +15,13 @@ export default function Dashboard() {
 	} = useContext(CreateContext);
 
 	switch (component) {
-		case ComponentDash.Administrar_Usuario:
+		case ComponentDash.Account:
 			return <Account />;
-		case 'userManagement':
+		case ComponentDash.UserManagement:
 			return <UserManagement />;
-		case 'productCreator':
+		case ComponentDash.ProductCreator:
 			return <ProductCreator />;
-		case 'bulkProductUploader':
+		case ComponentDash.BulkProductUploader:
 			return <BulkProductUploader />;
 		default:
 			return <NotFound text={component} />;

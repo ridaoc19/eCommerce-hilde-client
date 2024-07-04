@@ -1,4 +1,4 @@
-import { KeyboardEvent, useContext, useMemo, useState } from 'react';
+import { KeyboardEvent, useContext, useEffect, useMemo, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ComponentDash } from '../../../../hooks/useContext/dashboard/State';
 import departments from '../../../../services/api';
@@ -12,8 +12,18 @@ export default function Sidebar() {
 	const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
 	const [selectedId, setSelectedId] = useState<string>('');
 	const {
-		dashboard: { setDashboardState },
+		dashboard: {
+			setDashboardState,
+			dashboardState: { sidebar },
+		},
 	} = useContext(CreateContext);
+
+	useEffect(() => {
+		if (pathname === '/dashboard' && selectedId) {
+			setDashboardState(prevState => ({ ...prevState, component: selectedId as ComponentDash }));
+			setIsOpenMenu(false);
+		}
+	}, [pathname, selectedId, setDashboardState]);
 
 	const dataRight = useMemo(() => {
 		if (pathname !== '/dashboard' && selectedId) {
@@ -21,19 +31,15 @@ export default function Sidebar() {
 			if (filterCategory) return filterCategory;
 			return [];
 		}
-		if (selectedId) {
-			setDashboardState(prevState => ({ ...prevState, component: selectedId as ComponentDash }));
-			setIsOpenMenu(false);
-		}
 		return [];
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pathname, selectedId]);
 
 	const dataLeft: SidebarLeftProps['data'] = useMemo(() => {
 		if (pathname !== '/dashboard') {
 			return departments.map(({ department_id, department }) => ({ id: department_id, text: department }));
 		}
-		return Object.entries(ComponentDash).map(([text, id]) => ({ id, text: text.replaceAll('_', ' ') }));
+		return sidebar;
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [pathname]);
 
 	const handleOnClick = () => {
