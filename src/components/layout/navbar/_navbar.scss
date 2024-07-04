@@ -1,0 +1,17 @@
+@import './sidebar/sidebar';
+@import './login/login';
+
+.navbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	color: var(--base-light);
+
+	.navbar__logo {
+		display: block;
+	}
+
+	.navbar__login {
+		position: relative;
+	}
+}

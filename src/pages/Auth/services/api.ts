@@ -147,7 +147,7 @@ export const fetchChange = async (data: FetchChange) => {
 
 // ! TOKEN
 export interface FetchToken extends Pick<GUser.User, 'access_token'> {
-	dispatch: AppDispatch;
+	dispatch: any;
 }
 export const fetchToken = async ({ access_token, dispatch }: FetchToken): Promise<GUser.User> => {
 	try {

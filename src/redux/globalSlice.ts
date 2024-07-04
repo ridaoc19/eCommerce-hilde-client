@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
-import { PayloadAction } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import type { RootState } from './store';
 import generateUniqueId from '../utils/uuid';
 import createAppSlice from './createAppSlice';
-import type { RootState } from './store';
 
 export interface Message {
 	message: string;
@@ -66,10 +66,25 @@ export const globalSlice = createAppSlice({
 				}
 			}
 		),
-		deleteMessage: create.reducer((state, { payload }: PayloadAction<Message['errorId'][]>) => {
-			state.generalMessages = state.generalMessages.filter(({ errorId }) => !payload.includes(errorId));
-			state.localMessages = state.localMessages.filter(({ errorId }) => !payload.includes(errorId));
-		}),
+		deleteMessage: create.reducer(
+			(state, { payload }: PayloadAction<Partial<Pick<Message, 'errorId' | 'field'>>[]>) => {
+				if (payload.length > 0) {
+					if (payload.some(item => item.errorId)) {
+						state.generalMessages = state.generalMessages.filter(
+							message => !payload.some(p => p.errorId && p.errorId === message.errorId)
+						);
+					} else {
+						state.localMessages = state.localMessages.filter(
+							message =>
+								!payload.some(
+									p => (p.errorId && p.errorId === message.errorId) || (p.field && p.field === message.field)
+								)
+						);
+					}
+				}
+			}
+		),
+
 		cleanMessage: create.reducer(state => {
 			state.generalMessages = [];
 			state.localMessages = [];

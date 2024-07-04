@@ -34,7 +34,7 @@ function Button({
 						height: 16,
 						width: 16,
 						color: [ButtonType.Error, ButtonType.Success, ButtonType.Warning, ButtonType.Information].includes(type)
-							? _color['--font-light']
+							? _color['--base-font-light']
 							: undefined,
 					})}
 				</span>
@@ -51,7 +51,7 @@ function Button({
 						height: 16,
 						width: 16,
 						color: [ButtonType.Error, ButtonType.Success, ButtonType.Warning, ButtonType.Information].includes(type)
-							? _color['--font-light']
+							? _color['--base-font-light']
 							: undefined,
 					})}
 				</span>

@@ -1,0 +1,28 @@
+.sidebar-left {
+	max-height: 100vh;
+	display: grid;
+	grid-template-rows: 3.5rem 1fr 8rem;
+	background-color: var(--brand-5);
+	height: 100%;
+
+	&__header {
+		padding: 0 1rem;
+		background-color: var(--brand-6);
+
+		&--content {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+	}
+
+	&__main {
+		background-color: var(--brand-4);
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
+
+	&__footer {
+		background-color: var(--brand-7);
+	}
+}
