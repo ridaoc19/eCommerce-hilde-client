@@ -20,6 +20,11 @@ export const authSlice = createAppSlice({
 	name: 'auth',
 	initialState: initialStateAuth,
 	reducers: create => ({
+		postLogOut: create.reducer(state => {
+			localStorage.removeItem('token');
+			state.user = null;
+			state.status = 'idle';
+		}),
 		updateAuthState: create.reducer((state, { payload }: PayloadAction<Partial<InitialStateAuth>>) => {
 			if (payload.user) {
 				state.user = payload.user;
@@ -139,5 +144,6 @@ export const authSlice = createAppSlice({
 	}),
 });
 
-export const { postLogin, postReset, postRegistre, postChange, updateAuthState, postToken } = authSlice.actions;
+export const { postLogin, postReset, postRegistre, postChange, updateAuthState, postToken, postLogOut } =
+	authSlice.actions;
 export const authState = (state: RootState) => state.auth;

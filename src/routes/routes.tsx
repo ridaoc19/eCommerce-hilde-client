@@ -1,10 +1,14 @@
 import { createBrowserRouter } from 'react-router-dom';
+import Layout from '../components/layout/Layout';
 import Change from '../pages/Auth/change/Change';
 import Login from '../pages/Auth/Login/Login';
 import Registre from '../pages/Auth/registre/Registre';
 import Reset from '../pages/Auth/Reset/Reset';
-import Home from '../pages/Home/Home';
+import Dashboard from '../pages/Dashboard/Dashboard';
+import Home from '../pages/Navigation/Home/Home';
 import ProtectedAuth from './common/ProtectedAuth';
+import ProtectedDash from './common/ProtectedDash';
+import NotFound from '../components/NotFound/NotFound';
 
 const Auth = {
 	path: '/',
@@ -32,10 +36,29 @@ const Auth = {
 const Feature = [
 	{
 		path: '/',
-		element: <Home />,
+		element: (
+			<Layout>
+				<Home />
+			</Layout>
+		),
 	},
-	{ path: '*', element: <div>No Found</div> },
+	{ path: '*', element: <NotFound /> },
 ];
 
-const router = createBrowserRouter([...Feature, Auth]);
+const Dash = {
+	path: '/',
+	element: <ProtectedDash />,
+	children: [
+		{
+			path: '/dashboard',
+			element: (
+				<Layout>
+					<Dashboard />
+				</Layout>
+			),
+		},
+	],
+};
+
+const router = createBrowserRouter([...Feature, Auth, Dash]);
 export default router;

@@ -29,6 +29,7 @@ function useValidations() {
 				return { name, message: `El campo "${name}" falta por validar`, stop: true };
 			}
 			schema.validateSync(value);
+			// dispatch(deleteMessage([{ field: name }]));
 			return { name, message: ``, stop: false };
 		} catch (error) {
 			if (error instanceof Yup.ValidationError) {

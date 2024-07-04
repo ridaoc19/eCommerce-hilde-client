@@ -1,7 +1,7 @@
 import _color from '../../../styles/main/global/_color';
 import { SvgProps, SvgType } from './svgType';
 
-function Svg({ type, width = 24, height = 24, color = _color['--font-accent'] }: SvgProps) {
+function Svg({ type, width = 24, height = 24, color = _color['--base-main'] }: SvgProps) {
 	switch (type) {
 		case 'user':
 		case 'name':

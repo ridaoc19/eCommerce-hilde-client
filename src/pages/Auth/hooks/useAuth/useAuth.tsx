@@ -3,6 +3,8 @@ import { ButtonProps } from '../../../../components/common/button/button.type';
 import { InputProps } from '../../../../components/common/input/Input';
 import useValidations from '../../../../hooks/useValidations/useValidations';
 import AuthComponent from './AuthComponent/AuthComponent';
+import useAppDispatch from '../../../../hooks/useAppDispatch';
+import { postMessage } from '../../../../redux/globalSlice';
 
 export interface UseAuthProps<T, K> {
 	component: string;
@@ -18,7 +20,7 @@ export interface UseAuthProps<T, K> {
 export type InitialState<K extends string> = {
 	[key in K]: string;
 } & {
-	error: string;
+	// error: string;
 	iName: string;
 	iPlaceholder: string;
 	disabled: boolean;
@@ -35,6 +37,7 @@ export default function useAuth<T extends string, K extends string>({
 	buttons,
 	component,
 }: UseAuthProps<T, K>): UseAuthReturn<T, K> {
+	const dispatch = useAppDispatch();
 	const { getValidationErrors } = useValidations();
 	const [eventClick, setEventClick] = useState<UseAuthReturn<T, K>['eventClick']>({ state: [], value: '' as T });
 	const [state, setState] = useState<InitialState<K>[]>(
@@ -52,15 +55,15 @@ export default function useAuth<T extends string, K extends string>({
 	const handleOnClick = (event: MouseEvent<HTMLButtonElement>) => {
 		const { value } = event.target as HTMLButtonElement;
 		if (buttons.find(({ bId }) => bId === value)?.bValidate) {
-			const validateError: InitialState<K>[] = state.map(item => {
-				const { message } = getValidationErrors({ name: item.iName, value: item[item.iName as K] });
-				return {
-					...item,
-					error: message,
-				};
-			});
-			if (validateError.some(({ error }) => !!error)) {
-				setState(validateError);
+			const validateError: string[] = state
+				.map(item => {
+					const { message, name } = getValidationErrors({ name: item.iName, value: item[item.iName as K] });
+					return message ? `${name}: ${message}` : '';
+				})
+				.filter(Boolean);
+
+			if (validateError.length > 0) {
+				dispatch(postMessage({ statusCode: 400, message: validateError }));
 			} else {
 				setEventClick({ state, value: value as T });
 			}

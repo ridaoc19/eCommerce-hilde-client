@@ -6,7 +6,7 @@ export const getBorderColor = (errorMessage: string, value: string | number) => 
 		return _color['--error-6'];
 	}
 	if (value.toString().length === 0) {
-		return _color['--base-main'];
+		return _color['--font-accent'];
 	}
 	return _color['--success-6'];
 };
