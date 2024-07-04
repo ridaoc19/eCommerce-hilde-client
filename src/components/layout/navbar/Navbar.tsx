@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Svg from '../../common/icons/Svg';
 import { SvgType } from '../../common/icons/svgType';
-import Sidebar from '../sidebar/Sidebar';
+import Sidebar from './sidebar/Sidebar';
 
 export type HandleClickDiv = (event: React.MouseEvent<HTMLButtonElement | HTMLDivElement, MouseEvent>) => void;
 

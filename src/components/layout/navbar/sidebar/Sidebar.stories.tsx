@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react';
 import Sidebar from './Sidebar';
-import Layout from '../Layout';
+import Layout from '../../Layout';
 
 const meta: Meta<typeof Sidebar> = {
-	title: 'components/layout/Sidebar',
+	title: 'components/layout/navbar/Sidebar',
 	component: Sidebar,
 	decorators: [
 		Story => (

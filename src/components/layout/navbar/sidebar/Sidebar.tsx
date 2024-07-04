@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import SidebarIcon from './sidebarIcon/SidebarIcon';
 import SidebarLeft from './sidebarLeft/SidebarLeft';
 import SidebarRight from './sidebarRight/SidebarRight';
-import departments from '../../../services/api';
+import departments from '../../../../services/api';
 
 export default function Sidebar() {
 	const { pathname } = useLocation();

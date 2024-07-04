@@ -1,9 +1,9 @@
 import { Dispatch } from 'react';
 import { Link } from 'react-router-dom';
-import Button from '../../../common/button/Button';
-import { ButtonType } from '../../../common/button/button.type';
-import Svg from '../../../common/icons/Svg';
-import { SvgType } from '../../../common/icons/svgType';
+import Button from '../../../../common/button/Button';
+import { ButtonType } from '../../../../common/button/button.type';
+import Svg from '../../../../common/icons/Svg';
+import { SvgType } from '../../../../common/icons/svgType';
 import SidebarIcon from '../sidebarIcon/SidebarIcon';
 
 interface SidebarLeftProps {

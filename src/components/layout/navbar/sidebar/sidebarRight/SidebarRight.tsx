@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
-import Button from '../../../common/button/Button';
-import { ButtonType } from '../../../common/button/button.type';
+import Button from '../../../../common/button/Button';
+import { ButtonType } from '../../../../common/button/button.type';
 
 interface SidebarRightProps {
 	handleOnClick: () => void;
