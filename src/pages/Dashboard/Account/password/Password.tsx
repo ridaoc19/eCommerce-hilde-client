@@ -2,8 +2,8 @@ import { useContext, useState } from 'react';
 import Button from '../../../../components/common/button/Button';
 import { ButtonType } from '../../../../components/common/button/button.type';
 import useAppSelector from '../../../../hooks/useAppSelector';
+import { CreateContext } from '../../../../hooks/useContext/context';
 import { authState } from '../../../Auth/authSlice';
-import { DashboardContext } from '../../contextDash';
 import FormAccountPass from './FormAccountPass';
 import Render from './Render';
 
@@ -15,9 +15,11 @@ export type InitialStateAccountPass = Pick<GUser.User, 'user_id'> & { password: 
 function Password() {
 	const { user } = useAppSelector(authState);
 	const {
-		dashboardState: { account },
-		setDashboardState,
-	} = useContext(DashboardContext);
+		dashboard: {
+			dashboardState: { account },
+			setDashboardState,
+		},
+	} = useContext(CreateContext);
 
 	const initialStateAccountPass: InitialStateAccountPass = {
 		user_id: user?.user_id || '',

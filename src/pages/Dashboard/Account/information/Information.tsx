@@ -6,8 +6,8 @@ import Input from '../../../../components/common/input/Input';
 import useAppSelector from '../../../../hooks/useAppSelector';
 import useValidations from '../../../../hooks/useValidations/useValidations';
 import { authState } from '../../../Auth/authSlice';
-import { DashboardContext } from '../../contextDash';
 import Render from './Render';
+import { CreateContext } from '../../../../hooks/useContext/context';
 
 export enum AccountInfoButtonName {
 	Save = 'save',
@@ -44,9 +44,11 @@ function compareUserAndAccount(user: GUser.User | null, stateAccountInfo: Initia
 function Information() {
 	const { user } = useAppSelector(authState);
 	const {
-		dashboardState: { account },
-		setDashboardState,
-	} = useContext(DashboardContext);
+		dashboard: {
+			dashboardState: { account },
+			setDashboardState,
+		},
+	} = useContext(CreateContext);
 	const { getValidationErrors } = useValidations();
 
 	const initialStateAccountInfo: InitialStateAccountInfo = {
