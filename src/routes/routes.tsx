@@ -9,6 +9,9 @@ import Home from '../pages/Navigation/Home/Home';
 import ProtectedAuth from './common/ProtectedAuth';
 import ProtectedDash from './common/ProtectedDash';
 import NotFound from '../components/NotFound/NotFound';
+import ProductList from '../pages/Navigation/ProductList/ProductList';
+import ProductDetail from '../pages/Navigation/ProductDetail/ProductDetail';
+import VerifyEmail from '../pages/verifyEmail/VerifyEmail';
 
 const Auth = {
 	path: '/',
@@ -42,7 +45,30 @@ const Feature = [
 			</Layout>
 		),
 	},
-	{ path: '*', element: <NotFound /> },
+	{
+		path: '/list-products/:id',
+		element: (
+			<Layout>
+				<ProductList />
+			</Layout>
+		),
+	},
+	{
+		path: '/product-detail/:id',
+		element: (
+			<Layout>
+				<ProductDetail />
+			</Layout>
+		),
+	},
+	{
+		path: '/verify/:id',
+		element: <VerifyEmail />,
+	},
+	{
+		path: '*',
+		element: <NotFound />,
+	},
 ];
 
 const Dash = {

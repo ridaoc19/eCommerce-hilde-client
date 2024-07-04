@@ -7,16 +7,24 @@ declare namespace GUser {
 		phone: number;
 		verified: boolean;
 		verifiedEmail: boolean;
-		roles: string;
+		roles: 'super' | 'admin' | 'edit' | 'visitant';
 		addresses: null;
 		// createAt: string;
 		// updateAt: string;
 		access_token: string;
+		accessControl: {
+			[keyDashboard in PermitsRoles['id']]: boolean;
+		};
 	}
 
 	interface UserApi {
 		statusCode: number;
 		message: string;
-		data: User;
+		data: Omit<User, 'accessControl'>;
+	}
+
+	export interface PermitsRoles {
+		id: GUser.User['roles'];
+		roles: GUser.User['roles'][];
 	}
 }

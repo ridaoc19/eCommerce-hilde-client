@@ -1,3 +1,10 @@
+import Account from './Account/Account';
+import { DashboardProvider } from './contextDash';
+
 export default function Dashboard() {
-	return <div>Dashboard</div>;
+	return (
+		<DashboardProvider>
+			<Account />
+		</DashboardProvider>
+	);
 }

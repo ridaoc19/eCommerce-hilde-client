@@ -2,6 +2,13 @@ import type { AppDispatch } from '../../../redux/store';
 import { postMessage } from '../../../redux/globalSlice';
 import catchError from '../../../services/catchError';
 
+export const permitsRoles: GUser.PermitsRoles[] = [
+	{ id: 'super', roles: ['super'] },
+	{ id: 'admin', roles: ['super', 'admin'] },
+	{ id: 'edit', roles: ['super', 'admin', 'edit'] },
+	{ id: 'visitant', roles: ['super', 'admin', 'edit', 'visitant'] },
+];
+
 // ! LOGIN
 export interface FetchLogin extends Pick<GUser.User, 'email'> {
 	password: string;
@@ -35,7 +42,11 @@ export const fetchLogin = async (data: FetchLogin): Promise<GUser.User> => {
 		);
 
 		localStorage.setItem('token', user.access_token);
-		return user;
+		const accessControl = permitsRoles.reduce((acc, item) => {
+			return { ...acc, [item.id]: item.roles.some(r => r.includes(user.roles)) };
+		}, {}) as GUser.User['accessControl'];
+
+		return { ...user, accessControl };
 	} catch (error) {
 		catchError({ error, dispatch: data.dispatch });
 		throw error;
@@ -163,14 +174,18 @@ export const fetchToken = async ({ access_token, dispatch }: FetchToken): Promis
 			const errorResponse = await response.json();
 			throw errorResponse;
 		}
-		const { message, statusCode, data }: GUser.UserApi = await response.json();
+		const { message, statusCode, data: user }: GUser.UserApi = await response.json();
 		dispatch(
 			postMessage({
 				message,
 				statusCode,
 			})
 		);
-		return data;
+		const accessControl = permitsRoles.reduce((acc, item) => {
+			return { ...acc, [item.id]: item.roles.some(r => r.includes(user.roles)) };
+		}, {}) as GUser.User['accessControl'];
+
+		return { ...user, accessControl };
 	} catch (error) {
 		catchError({ error, dispatch });
 		throw error;
