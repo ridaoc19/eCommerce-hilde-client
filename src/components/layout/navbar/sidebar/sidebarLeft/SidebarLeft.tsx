@@ -1,19 +1,21 @@
 import { Dispatch } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Button from '../../../../common/button/Button';
 import { ButtonType } from '../../../../common/button/button.type';
 import Svg from '../../../../common/icons/Svg';
 import { SvgType } from '../../../../common/icons/svgType';
 import SidebarIcon from '../sidebarIcon/SidebarIcon';
 
-interface SidebarLeftProps {
+export interface SidebarLeftProps {
 	isOpenMenu: boolean;
 	handleOnClick: (isOpen: boolean) => void;
 	setSelectedId: Dispatch<string>;
-	data: { id: string; text: string }[];
+	data: { id: string; text: string; svgLeft?: SvgType }[];
 }
 
 export default function SidebarLeft({ handleOnClick, isOpenMenu, setSelectedId, data }: SidebarLeftProps) {
+	const { pathname } = useLocation();
+
 	return (
 		<div className='sidebar-left'>
 			<div className='sidebar-left__header'>
@@ -26,17 +28,18 @@ export default function SidebarLeft({ handleOnClick, isOpenMenu, setSelectedId, 
 			</div>
 
 			<div className='sidebar-left__main'>
-				{data.map(({ id, text }) => (
+				{data.map(({ id, text, svgLeft }) => (
 					<div
 						key={id}
 						onClick={() => setSelectedId(id)}
-						onMouseEnter={() => setSelectedId(id)}
+						onMouseEnter={() => (pathname !== '/dashboard' ? setSelectedId(id) : '')}
 						onKeyDown={() => setSelectedId(id)}
 						role='button'
 						tabIndex={0}
 						aria-label='selected id'
 					>
 						<Button
+							svgLeft={svgLeft}
 							svgRight={SvgType.ArrowRight}
 							type={ButtonType.Highlighter}
 							text={text}

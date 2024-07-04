@@ -12,17 +12,21 @@ export interface InputProps {
 	placeholder: string;
 	result: (data: { value: number | string }) => void;
 
+	initialValue?: number | string;
 	disabled?: boolean;
 	svgLeft?: SvgType;
 	svgRight?: SvgType;
 	other_attributes?: InputHTMLAttributes<HTMLInputElement>;
 }
 
-function Input({ svgLeft, svgRight, name, placeholder, disabled, other_attributes, result }: InputProps) {
+function Input({ svgLeft, svgRight, name, placeholder, disabled, other_attributes, result, initialValue }: InputProps) {
 	const dispatch = useAppDispatch();
 	const { localMessages } = useAppSelector(globalState);
 	const { getValidationErrors } = useValidations();
-	const [{ value, error }, setState] = useState<{ value: string | number; error: string }>({ value: '', error: '' });
+	const [{ value, error }, setState] = useState<{ value: string | number; error: string }>({
+		value: initialValue || '',
+		error: '',
+	});
 	const [toggle, setToggle] = useState(false);
 	const newSvgLeft = svgLeft === ('newPassword' as SvgType) ? SvgType.Password : svgLeft;
 
